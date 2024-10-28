@@ -1,0 +1,180 @@
+/* General body styling */
+body {
+    background-color: #121212;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Main contact container */
+.contact-container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 30px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    color: #ffffff;
+    position: relative; /* Required for the pseudo-elements */
+    overflow: hidden; /* Ensure no overflow due to padding animations */
+}
+
+/* Decorative before and after for contact container */
+.contact-container::before,
+.contact-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 5px solid #00bcd4; /* Decorative border */
+    border-radius: 10px; /* Rounded corners */
+    pointer-events: none; /* Prevents interfering with mouse events */
+    z-index: -1; /* Keep it behind other content */
+}
+
+/* Floating Effect */
+.contact-info,
+.message-form {
+    background: #1f1f1f;
+    border-radius: 10px; /* Rounded corners for floating effect */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Shadow for floating effect */
+    transition: transform 0.3s ease; /* Smooth transition */
+}
+
+/* Add a hover effect for floating elements */
+.contact-info:hover,
+.message-form:hover {
+    transform: translateY(-5px); /* Move the element up slightly on hover */
+}
+
+/* Shimmering Border Animation for Message Form */
+@keyframes shimmer {
+    0% {
+        border-color: #00bcd4;
+        box-shadow: 0 0 0 rgba(0, 188, 212, 0.5);
+    }
+    50% {
+        border-color: #0097a7;
+        box-shadow: 0 0 15px rgba(0, 188, 212, 1), 0 0 30px rgba(0, 188, 212, 0.7);
+    }
+    100% {
+        border-color: #00bcd4;
+        box-shadow: 0 0 0 rgba(0, 188, 212, 0);
+    }
+}
+
+/* Right Message Form Section */
+.message-form {
+    position: relative;
+    width: 40%;
+    padding: 40px;
+    border: 4px solid #00bcd4; /* Solid border to animate */
+    animation: shimmer 3s infinite; /* Apply shimmering border animation */
+}
+
+/* Form input and textarea styling */
+.message-form input,
+.message-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background: #121212;
+    border: none;
+    border-bottom: 2px solid #00bcd4;
+    color: #ffffff;
+    border-radius: 4px;
+}
+
+.message-form input::placeholder,
+.message-form textarea::placeholder {
+    color: #777;
+}
+
+.message-form button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #00bcd4;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.message-form button:hover {
+    background-color: #0097a7;
+}
+
+/* Left Contact Information Section */
+.contact-info {
+    width: 50%;
+    padding: 20px; /* Adjusted padding for content spacing */
+}
+
+h1 {
+    font-size: 2em;
+    color: #ffffff;
+    margin: 0;
+}
+
+.contact-info > p {
+    color: #b3b3b3;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #00bcd4;
+    color: #ffffff;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.text strong {
+    color: #00bcd4;
+    font-weight: bold;
+}
+
+.text p {
+    color: #b3b3b3;
+}
+
+/* Social media styling */
+.social-media {
+    margin-top: 20px;
+}
+
+.social-media p {
+    color: #b3b3b3;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.social-icons a {
+    color: #00bcd4;
+    font-size: 24px;
+    text-decoration: none;
+}
+
+.social-icons a:hover {
+    text-decoration: underline;
+}

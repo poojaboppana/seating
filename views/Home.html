@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convocation Seating Arrangement</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Link to Home.css -->
+    <link rel="stylesheet" href="/css/Home.css"> 
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+    <div class="logo">
+        <img src="/css/logo.png"  style="height: 50px; border-radius: 10px;">
+    </div>
+    
+    <div class="hamburger" onclick="toggleNav()">☰</div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+        <li><a href="/login">Login</a></li>
+    </ul>
+</nav>
+
+<div class="main">
+    <div class="text-content">
+        <h1>Convocation Seating Arrangement</h1>
+        <p>Please find your designated seating arrangement for the convocation ceremony. Arrive early to ensure a smooth experience. We look forward to celebrating this special occasion with you!</p>
+    </div>
+    <div class="container">
+        <div class="slide">
+            <div class="item" style="background-image: url(https://www.vignan.ac.in/img/our-projects/conv4.jpg);">
+                <div class="content">
+                    <div class="name"></div>
+                    <div class="des"></div>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(https://media.andhrajyothy.com/appimg/galleries/1822092303031630/09232022150649n44.JPG);">
+                <div class="content">
+                    <div class="name"></div>
+                    <div class="des"></div>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(https://vignan.ac.in/recentevents18/sankranthi20.JPG);">
+                <div class="content">
+                    <div class="name"></div>
+                    <div class="des"></div>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(https://vignan.ac.in/recentevents18/republic20.jpg);">
+                <div class="content">
+                    <div class="name"></div>
+                    <div class="des"></div>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(https://media.licdn.com/dms/image/v2/D5612AQFBx4jkIrpcDg/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1676515797186?e=2147483647&v=beta&t=iV1pwodaMFQj7nQE2dMxNctOPPS8bfD242jAewInbuI);">
+                <div class="content">
+                    <div class="name"></div>
+                    <div class="des"></div>
+                </div>
+            </div>
+            <div class="item" style="background-image: url(https://i.ytimg.com/vi/K86if9w_Yog/maxresdefault.jpg);">
+                <div class="content">
+                    <div class="name"></div>
+                    <div class="des"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="button">
+            <button class="prev"><i class="fa-solid fa-arrow-left"></i></button>
+            <button class="next"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- Link to Home.js -->
+<script src="/js/Home.js"></script>
+<script>
+    function toggleNavbar() {
+        const navLinks = document.querySelector('.nav-links');
+        navLinks.classList.toggle('active');
+    }
+</script>
+</body>
+</html>
