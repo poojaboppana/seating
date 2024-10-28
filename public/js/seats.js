@@ -1,9 +1,10 @@
 const leftHalf = document.querySelector('.left-half');
 const rightHalf = document.querySelector('.right-half');
 const availableCount = document.getElementById('availableCount');
-const message = document.getElementById('message');
+const successMessage = document.getElementById('successMessage');
 const seatCountInput = document.getElementById('seatCount');
 const bookButton = document.getElementById('bookButton');
+const notAvailableMessage = document.getElementById('notAvailableMessage');
 
 const totalSeats = 100; // Total number of seats
 let bookedSeats = 0;
@@ -13,7 +14,7 @@ function initSeats() {
     for (let i = 0; i < totalSeats; i++) {
         const seat = document.createElement('div');
         seat.classList.add('seat');
-        seat.innerHTML = `<span class="seat-number">${i + 1}</span><img src="css/chair.jpeg" alt="Chair">`; // Update the path if needed
+        seat.innerHTML = `<span class="seat-number">${i + 1}</span><img src="/css/chair.jpeg" alt="Chair">`; // Assign seat number
         seat.addEventListener('click', () => selectSeat(seat));
 
         // Add seats to left or right half based on index
@@ -47,7 +48,11 @@ function bookSeats() {
 
     // Check if requested seats exceed available seats
     if (requestedSeats > (totalSeats - bookedSeats)) {
-        showAlert("Not enough seats available!"); // Not enough seats available
+        notAvailableMessage.textContent = "Not available"; // Show the not available message
+        notAvailableMessage.style.display = 'block'; // Make it visible
+        setTimeout(() => {
+            notAvailableMessage.style.display = 'none'; // Hide after 3 seconds
+        }, 3000);
         return;
     }
 
@@ -66,6 +71,9 @@ function bookSeats() {
     document.querySelectorAll('.seat.selected').forEach(seat => {
         seat.classList.remove('selected');
     });
+
+    // Display success message
+    showSuccessMessage(`Successfully booked ${requestedSeats} seats! Available Seats: ${totalSeats - bookedSeats}`);
 }
 
 // Book a single seat
@@ -73,28 +81,28 @@ function bookSeat(seat) {
     if (!seat.classList.contains('booked')) {
         seat.classList.add('booked');
         bookedSeats++;
-        showAlert("Seat booked successfully!"); // Alert message
         updateAvailableCount();
     }
 }
 
-// Show alert message temporarily
-function showAlert(msg) {
-    message.textContent = msg; // Display the message
+// Show a success message in the designated area
+function showSuccessMessage(msg) {
+    successMessage.textContent = msg;
+    successMessage.style.display = 'block';
     setTimeout(() => {
-        message.textContent = ""; // Clear the message after 3 seconds
+        successMessage.style.display = 'none'; // Hide the message after 3 seconds
     }, 3000);
+}
+
+// Show alert messages
+function showAlert(msg) {
+    alert(msg);
 }
 
 // Update available seat count
 function updateAvailableCount() {
     const availableSeats = totalSeats - bookedSeats;
     availableCount.textContent = availableSeats;
-    if (availableSeats === 0) {
-        message.textContent = "No available seats!";
-    } else {
-        message.textContent = ""; // Clear the message if seats are available
-    }
 }
 
 // Event listener for the book button

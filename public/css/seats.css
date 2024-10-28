@@ -1,140 +1,210 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-    background-image: url(lights.jpg);
+    background-color: white;
+    margin-top: 1px;
+    padding: 10px;
+    background-image: url(/css/img3.webp);
     background-repeat: no-repeat;
     background-size: cover;
+    font-size:20px;
+    margin-top:2px;
+}
+/* Success message styling */
+#successMessage {
+    display: none;
+    position: fixed;
+    border-radius: 50px;
+    box-shadow: 10px 10px 20px pink;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width:300px;
+    height:100px;
+    background-color: white; /* Green background with slight transparency */
+    color: black;
+    padding: 20px 40px;
+    font-size: 1.5em;
+   padding-top: 40px;
+    text-align: center;
+    z-index: 1000;
 }
 
-.container {
+h1 {
+    
+    font-size: 3em;
+    color: transparent; /* Makes the text itself transparent */
+    -webkit-background-clip: text; /* Clips the image to the text */
+    background-clip: text;
     text-align: center;
-    max-width: 1200px; /* Increased max width for better layout */
-    margin: 0 auto; /* Center the container */
+    margin: 20px 0;
+    color:white;
+    text-shadow: 2px 2px 4px  black;
+    
+}
+
+
+
+.container {
+    
+    text-align: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-left: 90px;
+    color: white;   
 }
 
 .seat-wrapper {
-    margin: 20px 0; /* Add space above and below the seat map */
+    
+    margin: 20px 0;
 }
 
 .seat-map {
-    display: flex; /* Change to flex to align left and right halves */
-    justify-content: space-between; /* Space out the left and right sections */
+    background-image: url(/css/img7.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    width:1260px;
+    height: 380px;
+    justify-content: center;
     margin: 20px auto;
+    border-radius: 50px;
+}
+
+.seat-container {
+    margin-top: 2px;
+     /* Border around the seating area */
+    
+    padding: 20px; /* Spacing inside the container */
+    border-radius: 10px; /* Rounded corners */
+    display: flex;
+    justify-content: space-between; /* Space between left and right halves */
+    max-width: 1220px; /* Maximum width for seat container */
+    margin: 20px auto;
+    box-shadow: 20px 20px 40px pink;
 }
 
 .left-half,
 .right-half {
+    
     display: grid;
-    grid-template-columns: repeat(10, 1fr); /* Adjust to fill space */
-    gap: 7px; /* Space between seats */
-    flex: 15; /* Make both halves flexible to take equal space */
-    max-width: 500px; /* Set max width for each half */
+    grid-template-columns: repeat(10, 1fr);
+    gap: 7px;
+    flex: 15;
+    max-width: 1300px;
 }
 
-/* Add a margin to the right-half to create a gap */
 .right-half {
-    margin-left: 10px;
-    margin-right: 60px; /* Adjust the gap between left and right halves */
+    
+    margin-left: 60px;
+    margin-right: 60px;
 }
 
 .seat {
-    width: 50px; /* Size of each seat */
-    height: 50px; /* Size of each seat */
+    width: 50px;
+    height: 50px;
     border: 1px solid #000;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px; /* Rounded corners */
-    position: relative; /* Position for absolute child */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animation for seat hover */
-    background-color: #fff; /* Default background for seats */
+    border-radius: 10px;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: #fff;
 }
 
 .seat:hover {
-    transform: scale(1.05); /* Slightly increase size on hover */
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5); /* Add shadow effect on hover */
-    background-color: #e7f3ff; /* Light blue background on hover */
+    transform: scale(1.05);
+    box-shadow: 0 0 10px blue;
+    background-color: #e7f3ff;
 }
 
 .seat.selected {
-    background-color: #007bff; /* Selected seat color */
+    background-color:yellow;
 }
 
 .seat.booked {
-    background-color: #dc3545; /* Booked seat color */
+    background-color: #dc3545;
     cursor: not-allowed;
 }
 
 .seat img {
-    width: 30px; /* Chair image size */
-    height: auto; /* Maintain aspect ratio */
+    width: 30px;
+    height: auto;
 }
 
 .seat-number {
-    position: absolute; /* Absolute positioning for seat number */
-    top: 5px; /* Position at the top */
-    left: 5px; /* Position at the left */
-    font-size: 16px; /* Font size of the seat number */
-    font-weight: bold; /* Bold font */
-    color: #000; /* Seat number color */
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
 }
 
 .booking {
+    
     margin-bottom: 20px;
+    
 }
 
 .booking label {
-    font-size: 18px; /* Label font size */
-    color: #333; /* Label color */
+    
+    font-size: 30px;
+    width:200px;
+    padding-top: 5px;
+    color: #333;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 #seatCount {
-    padding: 10px; /* Padding for input */
-    border: 1px solid #ccc; /* Border for input */
-    border-radius: 5px; /* Rounded corners for input */
-    margin-right: 10px; /* Space between input and button */
-    transition: border-color 0.2s ease; /* Animation for input focus */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    transition: border-color 0.2s ease;
 }
 
 #seatCount:focus {
-    border-color: #007bff; /* Change border color on focus */
+    border-color: #00ff15;
 }
 
 #bookButton {
-    padding: 10px 20px; /* Padding for button */
-    background-color: #28a745; /* Button color */
-    color: white; /* Button text color */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    font-size: 16px; /* Button font size */
-    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Button transition */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect for button */
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 4px 4px 6px white;
 }
 
 #bookButton:hover {
-    background-color: #218838; /* Darker green on hover */
-    transform: translateY(-2px); /* Slightly lift button on hover */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow effect on hover */
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
 #bookButton:active {
-    transform: translateY(0); /* Button returns to original position when clicked */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Reduce shadow on active */
+    
+    transform: translateY(0);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .info {
+    
     margin-top: 20px;
-    font-size: 18px; /* Font size for messages */
-    color: #000; /* Message color */
+    font-size: 20px;
+    color: #000;
 }
 
 #message {
-    color: #dc3545; /* Color for messages */
-    font-weight: bold; /* Bold messages */
-    margin-top: 10px; /* Margin for spacing */
-    transition: opacity 0.5s ease; /* Fade effect for messages */
+    width:400px;
+    text-align: center;
+    color: #dc3545;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: opacity 0.5s ease;
 }

@@ -9,6 +9,8 @@
 </head>
 <body>
     <div class="container" id="container">
+        <!-- Display error message below the login form -->
+        
         <!-- Signup Form -->
         <div class="form-container sign-up">
             <form action="/signup" method="POST">
@@ -41,6 +43,10 @@
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <a href="#">Forget Your Password?</a>
+                
+                <!-- Error message will be displayed here -->
+                <div id="error-message" style="color: red; display: none;"></div>
+
                 <button type="submit">Sign In</button>
             </form>
         </div>
@@ -60,6 +66,22 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // Function to get query parameters from the URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Check for an error message in the URL and display it
+        const errorMessage = getQueryParam('error');
+        if (errorMessage) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.innerText = decodeURIComponent(errorMessage); // Decode URL-encoded characters
+            errorDiv.style.display = 'block'; // Show the error message
+        }
+    </script>
 
     <script src="/js/script.js"></script>
 </body>

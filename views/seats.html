@@ -8,21 +8,27 @@
 </head>
 <body>
     <div class="container">
-        <h1>Seating Planner</h1>
+        <h1>Your Seat Awaits!</h1>
         <div class="booking">
-            <label for="seatCount">How many seats do you want to book?</label>
-            <input type="number" id="seatCount" min="1" placeholder="Enter number of seats">
+            <label for="seatCount">How many seats do you want to book?</label><br>
+            <input type="number" id="seatCount" min="1" placeholder="Enter number of seats"><br>
+            <br>
             <button id="bookButton">Book Seats</button>
         </div>
         <div id="seatMap" class="seat-map">
-            <div class="left-half"></div>
-            <div class="right-half"></div>
+            <div class="seat-container">
+                <div class="left-half"></div>
+                <div class="right-half"></div>
+            </div>
         </div>
         <div class="info">
+            <div id="notAvailableMessage" style="color: red; display: none;font-size: 40px;"></div>
             <p>Available Seats: <span id="availableCount">0</span></p>
-            <p id="message"></p>
         </div>
     </div>
+
+    <!-- Success Message Popup -->
+    <div id="successMessage"></div>
 
     <script src="/js/seats.js"></script>
 </body>

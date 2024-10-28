@@ -56,6 +56,44 @@ body {
     border-radius: 10px;
     width: auto;
 }
+/* Add styles for the services section */
+.services-section {
+    padding: 50px;
+    background-color: #f5f5f5;
+    text-align: center;
+}
+
+.services-section h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.service-item {
+    margin: 20px 0;
+}
+
+.service-item h3 {
+    font-size: 24px;
+    color: #4542c5;
+}
+
+.service-item p {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Footer styles */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #4542c5;
+    color: white;
+    position: relative; /* Make sure footer is not fixed */
+    bottom: 0; /* Optional: stick to the bottom */
+    width: 100%; /* Full width */
+}
+
 
 /* Main layout styles */
 .main {

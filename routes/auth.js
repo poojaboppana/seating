@@ -14,44 +14,20 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-// Endpoint to send email
-router.post("/send", (req, res) => {
-    const { name, email, message } = req.body;
-
-    const mailOptions = {
-        from: email, // sender address
-        to: "info@vignan.ac.in", // receiver address
-        subject: `Message from ${name}`,
-        text: message,
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return res.status(500).send({ success: false, message: "Failed to send message." });
-        }
-        res.status(200).send({ success: true, message: "Message sent successfully!" });
-    });
-});
-
-
-
-
-
-
-
 // Email validation regex
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
+// Signup route
 // Signup route
 router.post('/signup', async (req, res) => {
     const { username, email, password } = req.body;
 
-    // Validate email format
-    if (!emailRegex.test(email)) {
-        return res.status(400).send('Invalid email format');
-    }
-
     try {
+        // Check if the user already exists
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.redirect('/login?error=Email already exists');
+        }
+
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -60,40 +36,31 @@ router.post('/signup', async (req, res) => {
 
         // Save the user to the database
         await newUser.save();
-        console.log('User registered:', newUser);
-        
-        // Redirect to login page after successful signup
+
+        // Redirect or render success message
         res.redirect('/login');
     } catch (error) {
-        console.error('Error signing up:', error);
-        res.status(500).send('Server error during signup');
+        console.error('Error during signup:', error);
+        res.redirect(`/login?error=Server error during signup: ${error.message}`);
     }
 });
-
-// Login route
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Find the user by email
-        const user = await User.findOne({ email });
-        if (!user) return res.status(400).send('User not found');
-
-        // Check password
-        const match = await bcrypt.compare(password, user.password);
-        if (!match) return res.status(400).send('Invalid credentials');
-
-        // Successful login
-        console.log('User logged in:', user);
-        res.redirect('/seats'); // Redirect to your desired page after login
+        const existingUser = await User.findOne({ email }); // Find user by email
+        if (existingUser) {
+            const isPasswordValid = await bcrypt.compare(password, existingUser.password); // Compare hashed password
+            if (isPasswordValid) {
+                return res.redirect("/seats"); // Redirect to dashboard on successful login
+            }
+        }
+        // If user not found or password is incorrect
+        return res.redirect("/login?error=Invalid email or password");
     } catch (error) {
-        console.error('Error logging in:', error);
-        res.status(500).send('Server error during login');
+        console.error('Error during login:', error);
+        return res.redirect(`/login?error=Server error during login: ${error.message}`);
     }
 });
-
-
-
-
 
 module.exports = router;

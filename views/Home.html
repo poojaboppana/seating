@@ -14,17 +14,13 @@
 <!-- Navbar -->
 <nav class="navbar">
     <div class="logo">
-        <img src="/css/logo.png"  style="height: 50px; border-radius: 10px;">
+        <img src="/css/logo.png" style="height: 50px; border-radius: 10px;">
     </div>
     
-    <div class="hamburger" onclick="toggleNav()">☰</div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
+    <div class="hamburger" onclick="toggleNavbar()">☰</div>
     <ul class="nav-links">
         <li><a href="/">Home</a></li>
-        <li><a href="#">Services</a></li>
+        <li><a href="#services">Services</a></li>
         <li><a href="/about">About Us</a></li>
         <li><a href="/contact">Contact Us</a></li>
         <li><a href="/login">Login</a></li>
@@ -83,6 +79,28 @@
     </div>
 </div>
 
+<!-- Services Section -->
+<section id="services" class="services-section">
+    <h2>Our Services</h2>
+    <div class="service-item">
+        <h3>Seating Arrangements</h3>
+        <p>We provide well-organized seating arrangements for all participants to ensure a comfortable experience during the convocation ceremony.</p>
+    </div>
+    <div class="service-item">
+        <h3>Event Management</h3>
+        <p>Our team specializes in managing events, ensuring everything runs smoothly from start to finish, including logistics and coordination.</p>
+    </div>
+    <div class="service-item">
+        <h3>Guest Services</h3>
+        <p>We offer dedicated services for our guests, including assistance with queries and providing information during the event.</p>
+    </div>
+</section>
+
+<!-- Footer with copyright -->
+<footer class="footer">
+    <p>&copy; 2024 seating solutions. All Rights Reserved.</p>
+</footer>
+
 <!-- Link to Home.js -->
 <script src="/js/Home.js"></script>
 <script>
@@ -90,6 +108,15 @@
         const navLinks = document.querySelector('.nav-links');
         navLinks.classList.toggle('active');
     }
+    
+    // Smooth scroll for navigation links
+    document.querySelectorAll('.nav-links a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            target.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
 </script>
 </body>
 </html>
