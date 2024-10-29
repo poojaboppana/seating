@@ -2,6 +2,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose'); // Import Mongoose
+const session = require('express-session'); // Import express-session
 const authRoutes = require('./routes/auth');
 
 const app = express();
@@ -17,6 +18,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // For parsing application/json
 
+// Session configuration
+app.use(session({
+    secret: 'your-secret-key', // Change to a secure secret
+    resave: false,
+    saveUninitialized: false,
+}));
+
 // Connect to MongoDB
 mongoose.connect('mongodb://localhost:27017/arrangement')
     .then(() => console.log('Connected to MongoDB'))
@@ -24,9 +32,12 @@ mongoose.connect('mongodb://localhost:27017/arrangement')
 
 // Use the auth routes for login and signup
 app.use(authRoutes);
+
+// Route for booking seats - Ensure this is below the auth routes
 app.get('/seats', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'seats.html'));
 });
+
 // Route for home page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'Home.html'));
@@ -34,17 +45,17 @@ app.get('/', (req, res) => {
 
 // Route for login page
 app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'login.html')); // Assuming login.html is in views
+    res.sendFile(path.join(__dirname, 'views', 'login.html'));
 });
 
 // Route for about page
 app.get('/about', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'about.html')); // Assuming about.html is in views
+    res.sendFile(path.join(__dirname, 'views', 'about.html'));
 });
 
 // Route for contact page
 app.get('/contact', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'contact.html')); // Assuming contact.html is in views
+    res.sendFile(path.join(__dirname, 'views', 'contact.html'));
 });
 
 // Start the server

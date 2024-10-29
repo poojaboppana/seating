@@ -11,8 +11,7 @@
         <h1>Your Seat Awaits!</h1>
         <div class="booking">
             <label for="seatCount">How many seats do you want to book?</label><br>
-            <input type="number" id="seatCount" min="1" placeholder="Enter number of seats"><br>
-            <br>
+            <input type="number" id="seatCount" min="1" placeholder="Enter number of seats"><br><br>
             <button id="bookButton">Book Seats</button>
         </div>
         <div id="seatMap" class="seat-map">
@@ -22,14 +21,15 @@
             </div>
         </div>
         <div class="info">
-            <div id="notAvailableMessage" style="color: red; display: none;font-size: 40px;"></div>
+            <div id="notAvailableMessage" style="color: red; display: none; font-size: 20px;"></div>
             <p>Available Seats: <span id="availableCount">0</span></p>
         </div>
     </div>
 
     <!-- Success Message Popup -->
-    <div id="successMessage"></div>
+    <div id="successMessage" style="display: none; color: green; font-size: 20px; text-align: center; margin-top: 20px;"></div>
 
+    <!-- Linking the seats.js file -->
     <script src="/js/seats.js"></script>
 </body>
 </html>

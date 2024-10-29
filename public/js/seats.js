@@ -14,7 +14,10 @@ function initSeats() {
     for (let i = 0; i < totalSeats; i++) {
         const seat = document.createElement('div');
         seat.classList.add('seat');
-        seat.innerHTML = `<span class="seat-number">${i + 1}</span><img src="/css/chair.jpeg" alt="Chair">`; // Assign seat number
+        
+        // Assign seat number with HTML markup
+        seat.innerHTML = `<span class="seat-number">${i + 1}</span><img src="/css/chair.jpeg" alt="Chair">`;
+        
         seat.addEventListener('click', () => selectSeat(seat));
 
         // Add seats to left or right half based on index
@@ -48,6 +51,7 @@ function bookSeats() {
 
     // Check if requested seats exceed available seats
     if (requestedSeats > (totalSeats - bookedSeats)) {
+        // Display not available message
         notAvailableMessage.textContent = "Not available"; // Show the not available message
         notAvailableMessage.style.display = 'block'; // Make it visible
         setTimeout(() => {
@@ -94,15 +98,15 @@ function showSuccessMessage(msg) {
     }, 3000);
 }
 
-// Show alert messages
-function showAlert(msg) {
-    alert(msg);
-}
-
 // Update available seat count
 function updateAvailableCount() {
     const availableSeats = totalSeats - bookedSeats;
     availableCount.textContent = availableSeats;
+}
+
+// Show alert for user messages
+function showAlert(message) {
+    alert(message);
 }
 
 // Event listener for the book button
