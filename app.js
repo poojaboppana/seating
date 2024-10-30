@@ -1,8 +1,7 @@
-// app.js
 const express = require('express');
 const path = require('path');
-const mongoose = require('mongoose'); // Import Mongoose
-const session = require('express-session'); // Import express-session
+const mongoose = require('mongoose');
+const session = require('express-session');
 const authRoutes = require('./routes/auth');
 
 const app = express();
@@ -14,6 +13,7 @@ app.set('view engine', 'ejs');
 
 // Set the views directory
 app.set('views', path.join(__dirname, 'views'));
+
 // Middleware to parse request bodies
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // For parsing application/json
@@ -33,7 +33,7 @@ mongoose.connect('mongodb://localhost:27017/arrangement')
 // Use the auth routes for login and signup
 app.use(authRoutes);
 
-// Route for booking seats - Ensure this is below the auth routes
+// Route for booking seats
 app.get('/seats', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'seats.html'));
 });
@@ -42,20 +42,22 @@ app.get('/seats', (req, res) => {
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'Home.html'));
 });
-
+app.get('/contact', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'contact.html'));
+});
 // Route for login page
 app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'login.html'));
 });
-
-// Route for about page
 app.get('/about', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'about.html'));
 });
-
-// Route for contact page
-app.get('/contact', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'contact.html'));
+app.get('/profile', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'profile.html'));
+});
+// Route for events page
+app.get('/events', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'events.html'));
 });
 
 // Start the server

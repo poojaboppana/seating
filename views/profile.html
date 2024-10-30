@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/seating/public/css/profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Center the profile card in the middle of the page */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ecd8e7b5;
+        }
+
+        .profile-card {
+            width: 300px;
+            padding: 30px;
+            background-color: #e3e6dd;
+            border: 4px solid #007bff;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            position: relative;
+            text-align: center;
+            animation: float 3s ease-in-out infinite, shine 2s infinite;
+        }
+
+        /* Floating animation keyframes */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* Profile picture area */
+        .profile-picture-area {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        /* Edit icon in the top right corner */
+        #editButton {
+            position: absolute;
+            top: 10px;
+            background: none;
+            margin-left: 120px;
+            border: none;
+            cursor: pointer;
+            color: #007bff;
+            font-size: 18px;
+        }
+
+        /* Profile image styles with circular shape */
+        .profile-image {
+            display: block;
+            width: 150px;
+            height: 150px; /* Make sure height is equal to width for circle */
+            margin: 0 auto;
+            border-radius: 50%; /* Circular shape */
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Hover effect to enlarge image */
+        .profile-image:hover {
+            transform: scale(1.2);
+            opacity: 0.9;
+        }
+
+        /* Styling for profile information and input fields */
+        .input-field,
+        button {
+            width: 100%;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #090000;
+            box-sizing: border-box;
+        }
+
+        #userInfo p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-card">
+        <!-- Profile picture area -->
+        <div class="profile-picture-area">
+            <!-- Profile image or default placeholder icon in the middle -->
+            <img id="profileImage" src="" alt="User Image" class="profile-image" style="display: none;">
+
+            <!-- File input to select a new profile image -->
+            <input type="file" id="imageInput" accept="image/*" onchange="loadImage(event)" style="display: block;">
+        </div>
+
+        <!-- Editable form, visible by default -->
+        <div id="inputFields">
+            <input type="text" id="fullName" placeholder="Full Name" class="input-field" required>
+            <input type="email" id="email" placeholder="Email" class="input-field" required>
+            <input type="text" id="yearOfStudy" placeholder="Year of Study" class="input-field" required>
+            <input type="text" id="collegeName" placeholder="College Name" class="input-field" required>
+            <button onclick="updateProfile()">Update Profile</button>
+        </div>
+
+        <!-- Profile information display -->
+        <div id="userInfo" class="user-info" style="display: none;">
+            <h2 class="full-name" id="displayName">Your Name</h2>
+            <p class="email" id="displayEmail">your.email@example.com</p>
+            <p class="year-of-study" id="displayYear">Year of Study: 3</p>
+            <p class="college-name" id="displayCollege">College: XYZ University</p>
+        </div>
+
+        <!-- Edit icon to toggle form view -->
+        <button id="editButton" onclick="toggleEdit()" style="display: none;">
+            <i class="fas fa-edit"></i>
+        </button>
+    </div>
+
+    <script>
+        function toggleEdit() {
+            const userInfo = document.getElementById('userInfo');
+            const inputFields = document.getElementById('inputFields');
+            const editButton = document.getElementById('editButton');
+            const isEditing = userInfo.style.display === 'block';
+            userInfo.style.display = isEditing ? 'none' : 'block';
+            inputFields.style.display = isEditing ? 'block' : 'none';
+
+            if (isEditing) {
+                document.getElementById('fullName').value = document.getElementById('displayName').innerText;
+                document.getElementById('email').value = document.getElementById('displayEmail').innerText;
+                document.getElementById('yearOfStudy').value = document.getElementById('displayYear').innerText.replace('Year of Study: ', '');
+                document.getElementById('collegeName').value = document.getElementById('displayCollege').innerText.replace('College: ', '');
+            } else {
+                editButton.style.display = 'none'; // Hide edit button when in edit mode
+            }
+        }
+
+        function loadImage(event) {
+            const image = document.getElementById('profileImage');
+            const input = document.getElementById('imageInput');
+
+            // Set the image source and show the image
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.style.display = 'block'; // Show the image
+
+            // Hide the input field after uploading the image
+            input.style.display = 'none'; 
+        }
+
+        function updateProfile() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const yearOfStudy = document.getElementById('yearOfStudy').value.trim();
+            const collegeName = document.getElementById('collegeName').value.trim();
+
+            if (!fullName || !email || !yearOfStudy || !collegeName) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            document.getElementById('displayName').innerText = fullName;
+            document.getElementById('displayEmail').innerText = email;
+            document.getElementById('displayYear').innerText = `Year of Study: ${yearOfStudy}`;
+            document.getElementById('displayCollege').innerText = `College: ${collegeName}`;
+            toggleEdit();
+            document.getElementById('editButton').style.display = 'block'; // Show edit button after updating
+        }
+    </script>
+</body>
+
+</html>

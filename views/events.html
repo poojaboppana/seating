@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Page</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        .event-description {
+            margin-bottom: 20px;
+        }
+        .attendee-list {
+            list-style: none;
+            padding: 0;
+        }
+        .attendee-list li {
+            padding: 8px;
+            border-bottom: 1px solid #ccc;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Event Details</h1>
+</header>
+
+<div class="container">
+    <h2 class="event-title">Annual Charity Gala</h2>
+    <p class="event-description">
+        Join us for our Annual Charity Gala, where we come together to support a great cause. Enjoy an evening of entertainment, fine dining, and fundraising activities.
+    </p>
+    
+    <h3>Event Details:</h3>
+    <ul>
+        <li><strong>Date:</strong> December 15, 2024</li>
+        <li><strong>Time:</strong> 6:00 PM - 10:00 PM</li>
+        <li><strong>Location:</strong> Grand Ballroom, City Hall</li>
+    </ul>
+
+    <h3>Attendees:</h3>
+    <ul class="attendee-list">
+        <li>John Doe</li>
+        <li>Jane Smith</li>
+        <li>Emily Johnson</li>
+        <li>Michael Brown</li>
+        <li>Sarah Davis</li>
+        <!-- You can dynamically populate this list with attendees from your database -->
+    </ul>
+
+    <a href="/" class="back-button">Back to Home</a>
+</div>
+
+</body>
+</html>

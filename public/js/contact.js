@@ -11,36 +11,18 @@ document.getElementById("send-button").addEventListener("click", function(event)
         alert("Please fill in all fields.");
         return;
     }
+  
+    
+    // Prepare WhatsApp message
+    const phoneNumber = "7207547829"; // Replace with the owner's WhatsApp phone number
+    const encodedMessage = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nMessage: ${message}`);
+    const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
 
-    // Create an object to send in the POST request
-    const data = {
-        name: name,
-        email: email,
-        message: message,
-    };
+    // Open WhatsApp link
+    window.open(whatsappLink, '_blank');
 
-    // Send the POST request to the server
-    fetch("http://localhost:3000/send", { // Update to match your server's port
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert("Your message has been sent successfully!");
-            // Clear the fields after sending
-            document.getElementById("name").value = "";
-            document.getElementById("email").value = "";
-            document.getElementById("message").value = "";
-        } else {
-            alert("An error occurred while sending your message. Please try again.");
-        }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        alert("An error occurred while sending your message. Please try again.");
-    });
+    // Clear the fields after sending
+    document.getElementById("name").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("message").value = "";
 });

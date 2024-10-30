@@ -1,21 +1,21 @@
-// models/Booking.js
 const mongoose = require('mongoose');
-
+// Define the booking schema
 const bookingSchema = new mongoose.Schema({
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+    userId: { 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User', // Reference to the User model
+        required: true // User ID is required
     },
-    seats: {
-        type: [Number],
-        required: true
+    bookingDate: { 
+        type: Date, 
+        required: true // Date of booking is required
     },
-    bookingDate: {
-        type: Date,
-        default: Date.now
+    seats: { 
+        type: [Number], // Store an array of booked seat numbers
+        required: true, // Seats array is required
+        min: 1 // Ensure at least one seat is booked
     }
 });
 
-const Booking = mongoose.model('Booking', bookingSchema);
-module.exports = Booking;
+// Create the Booking model using the schema
+module.exports = mongoose.model('Booking', bookingSchema);

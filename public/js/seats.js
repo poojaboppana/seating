@@ -10,23 +10,31 @@ const totalSeats = 100; // Total number of seats
 let bookedSeats = 0;
 
 // Initialize seats
-function initSeats() {
+async function initSeats() {
+    // Get booked seats from localStorage
+    const bookedSeatsFromStorage = JSON.parse(localStorage.getItem('bookedSeats')) || [];
+    bookedSeats = bookedSeatsFromStorage.length; // Update bookedSeats count
+
     for (let i = 0; i < totalSeats; i++) {
         const seat = document.createElement('div');
         seat.classList.add('seat');
-        
-        // Assign seat number with HTML markup
+        seat.dataset.seatNumber = i + 1; // Assign a unique seat number
         seat.innerHTML = `<span class="seat-number">${i + 1}</span><img src="/css/chair.jpeg" alt="Chair">`;
-        
         seat.addEventListener('click', () => selectSeat(seat));
+
+        // Check if the seat is booked
+        if (bookedSeatsFromStorage.includes(i + 1)) {
+            seat.classList.add('booked'); // Mark as booked
+        }
 
         // Add seats to left or right half based on index
         if (i < totalSeats / 2) {
-            leftHalf.appendChild(seat); // First half to left
+            leftHalf.appendChild(seat);
         } else {
-            rightHalf.appendChild(seat); // Second half to right
+            rightHalf.appendChild(seat);
         }
     }
+
     updateAvailableCount();
 }
 
@@ -86,7 +94,17 @@ function bookSeat(seat) {
         seat.classList.add('booked');
         bookedSeats++;
         updateAvailableCount();
+
+        // Save booked seat number to localStorage
+        saveBookedSeats(seat.dataset.seatNumber);
     }
+}
+
+// Save booked seats to localStorage
+function saveBookedSeats(seatNumber) {
+    const bookedSeatsFromStorage = JSON.parse(localStorage.getItem('bookedSeats')) || [];
+    bookedSeatsFromStorage.push(parseInt(seatNumber));
+    localStorage.setItem('bookedSeats', JSON.stringify(bookedSeatsFromStorage));
 }
 
 // Show a success message in the designated area

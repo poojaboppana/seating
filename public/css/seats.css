@@ -6,9 +6,34 @@ body {
     background-image: url(/css/img3.webp);
     background-repeat: no-repeat;
     background-size: cover;
-    font-size:20px;
-    margin-top:2px;
+    font-size: 20px;
+    margin-top: 2px;
 }
+
+/* Add this section for the logout button styling */
+.logout-button {
+    position: absolute; /* Position the button absolutely */
+    top: 20px; /* Adjust the top position */
+    right: 20px; /* Adjust the right position */
+    z-index: 1000; /* Make sure it appears above other elements */
+}
+
+.logout-button a {
+    padding: 10px 15px;
+    background-color: #dc3545; /* Red background for logout */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button a:hover {
+    background-color: #c82333; /* Darker red on hover */
+}
+
 /* Success message styling */
 #successMessage {
     display: none;
@@ -18,34 +43,29 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width:300px;
-    height:100px;
+    width: 300px;
+    height: 100px;
     background-color: white; /* Green background with slight transparency */
     color: black;
     padding: 20px 40px;
     font-size: 1.5em;
-   padding-top: 40px;
+    padding-top: 40px;
     text-align: center;
     z-index: 1000;
 }
 
 h1 {
-    
     font-size: 3em;
     color: transparent; /* Makes the text itself transparent */
     -webkit-background-clip: text; /* Clips the image to the text */
     background-clip: text;
     text-align: center;
     margin: 20px 0;
-    color:white;
-    text-shadow: 2px 2px 4px  black;
-    
+    color: white;
+    text-shadow: 2px 2px 4px black;
 }
 
-
-
 .container {
-    
     text-align: center;
     max-width: 1200px;
     margin: 0 auto;
@@ -54,7 +74,6 @@ h1 {
 }
 
 .seat-wrapper {
-    
     margin: 20px 0;
 }
 
@@ -63,7 +82,7 @@ h1 {
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
-    width:1260px;
+    width: 1260px;
     height: 380px;
     justify-content: center;
     margin: 20px auto;
@@ -72,8 +91,6 @@ h1 {
 
 .seat-container {
     margin-top: 2px;
-     /* Border around the seating area */
-    
     padding: 20px; /* Spacing inside the container */
     border-radius: 10px; /* Rounded corners */
     display: flex;
@@ -85,7 +102,6 @@ h1 {
 
 .left-half,
 .right-half {
-    
     display: grid;
     grid-template-columns: repeat(10, 1fr);
     gap: 7px;
@@ -94,7 +110,6 @@ h1 {
 }
 
 .right-half {
-    
     margin-left: 60px;
     margin-right: 60px;
 }
@@ -120,7 +135,7 @@ h1 {
 }
 
 .seat.selected {
-    background-color:yellow;
+    background-color: yellow;
 }
 
 .seat.booked {
@@ -143,15 +158,12 @@ h1 {
 }
 
 .booking {
-    
     margin-bottom: 20px;
-    
 }
 
 .booking label {
-    
     font-size: 30px;
-    width:200px;
+    width: 200px;
     padding-top: 5px;
     color: #333;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -188,20 +200,18 @@ h1 {
 }
 
 #bookButton:active {
-    
     transform: translateY(0);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .info {
-    
     margin-top: 20px;
     font-size: 20px;
     color: #000;
 }
 
 #message {
-    width:400px;
+    width: 400px;
     text-align: center;
     color: #dc3545;
     font-weight: bold;
