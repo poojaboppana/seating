@@ -1,13 +1,11 @@
 // models/admin.js
-
 const mongoose = require('mongoose');
 
-// Define the schema for the admin collection
 const adminSchema = new mongoose.Schema({
     useremail: {
         type: String,
         required: true,
-        unique: true, // Ensure that each email is unique
+        unique: true,
     },
     password: {
         type: String,
@@ -15,7 +13,6 @@ const adminSchema = new mongoose.Schema({
     },
 });
 
-// Create the Admin model
+const Admin = mongoose.model('Admin', adminSchema);
 
-
-module.exports = mongoose.model('admin', adminSchema);
+module.exports = Admin;

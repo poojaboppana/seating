@@ -29,7 +29,7 @@
 
         <!-- Login Form -->
         <div class="form-container sign-in">
-            <form action="/login" method="POST" id="loginForm" onsubmit="return validateLogin(event)"> 
+            <form action="/login" method="POST"> 
                 <h1>Sign In</h1>
                 <div class="social-icons">
                     <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -73,32 +73,6 @@
     </div>
 
     <script>
-        function validateLogin(event) {
-            const role = document.getElementById('role').value;
-            const email = document.querySelector('input[name="email"]').value;
-            const password = document.querySelector('input[name="password"]').value;
-
-            // Admin credentials (should be securely managed in a real application)
-            const adminEmail = 'admin@example.com'; 
-            const adminPassword = '123';
-
-            if (role === 'admin') {
-                // Validate admin credentials
-                if (email === adminEmail && password === adminPassword) {
-                    // Redirect to events.html on successful login
-                    window.location.href = './events.html';
-                    return false; // Prevent form submission
-                } else {
-                    // Show error message for invalid admin credentials
-                    const errorDiv = document.getElementById('error-message');
-                    errorDiv.innerText = 'Invalid admin credentials!';
-                    errorDiv.style.display = 'block';
-                    return false; // Prevent form submission
-                }
-            }
-            return true; // Allow form submission for non-admin roles
-        }
-
         // Function to get query parameters from the URL
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);

@@ -1,10 +1,9 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const User = require('../models/User');
-const Booking = require('../models/Booking');
-const path = require('path'); // Make sure to require path for file serving
-const Admin = require('../models/admin'); // Ensure correct relative path
+const User = require('../models/User'); // Ensure this path is correct
+const Admin = require('../models/admin'); // Ensure this path is correct
+const path = require('path');
 
 const router = express.Router();
 
@@ -35,98 +34,54 @@ router.post('/signup', async (req, res) => {
         res.redirect('/login');
     } catch (error) {
         console.error('Error during signup:', error);
-        res.redirect(`/login?error=Server error during signup: ${error.message}`);
+        res.redirect(`/login?error=Server error during signup: ${error.message}`); // Corrected with backticks
     }
 });
 
 // Login route
 router.post('/login', async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     try {
-        // Check if the user is an admin
-        const existingAdmin = await Admin.findOne({ useremail: email });
-        if (existingAdmin) {
-            const isPasswordValid = await bcrypt.compare(password, existingAdmin.password);
-            if (isPasswordValid) {
-                req.session.userId = existingAdmin._id; // Set admin ID in session
-                return res.redirect("/events"); // Redirect admin to events page
-            } else {
-                return res.redirect("/login?error=Invalid email or password");
+        if (role === 'admin') {
+            // Check if the user is an admin
+            const existingAdmin = await Admin.findOne({ useremail: email });
+            if (existingAdmin) {
+                const isPasswordValid = await bcrypt.compare(password, existingAdmin.password);
+                if (isPasswordValid) {
+                    req.session.userId = existingAdmin._id; // Set admin ID in session
+                    return res.redirect("/admin"); // Redirect admin to events page
+                } else {
+                    console.log("Invalid password for admin:", email); // Debug log
+                    return res.redirect("/login?error=Invalid email or password");
+                }
+            }
+        } else {
+            // If not an admin, check for regular user
+            const existingUser = await User.findOne({ email });
+            if (existingUser) {
+                const isPasswordValid = await bcrypt.compare(password, existingUser.password);
+                if (isPasswordValid) {
+                    req.session.userId = existingUser._id; // Set user ID in session
+                    return res.redirect("/seats"); // Redirect regular user to seats page
+                }
             }
         }
 
-        // If not an admin, check for regular user
-        const existingUser = await User.findOne({ email });
-        if (existingUser) {
-            const isPasswordValid = await bcrypt.compare(password, existingUser.password);
-            if (isPasswordValid) {
-                req.session.userId = existingUser._id; // Set user ID in session
-                return res.redirect("/seats"); // Redirect regular user to seats page
-            }
-        }
-
+        console.log("Admin/User not found with email:", email); // Debug log
         return res.redirect("/login?error=Invalid email or password");
     } catch (error) {
         console.error('Error during login:', error);
-        return res.redirect(`/login?error=Server error during login: ${error.message}`);
+        return res.redirect(`/login?error=Server error during login: ${error.message}`); // Corrected with backticks
     }
 });
-
-// Admin signup route
-router.post('/admin/signup', async (req, res) => {
-    const { useremail, password } = req.body;
-
-    try {
-        const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
-        const newAdmin = new Admin({ useremail, password: hashedPassword });
-        await newAdmin.save();
-        res.status(201).send('Admin created successfully!');
-    } catch (error) {
-        res.status(400).send('Error creating admin: ' + error.message);
-    }
-});
-
-// Authentication middleware
-function isAuthenticated(req, res, next) {
-    if (req.session.userId || req.isAuthenticated()) {
-        next();
-    } else {
-        res.redirect('/login?error=Please log in to continue');
-    }
-}
-
-function isAdmin(req, res, next) {
-    if (req.session.userId && req.body.email === ADMIN_EMAIL) {
-        return next();
-    }
-    res.redirect('/login?error=Access denied');
-}
 
 // Protect the event page route
-router.get('/events', isAdmin, (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'events.html')); // Ensure correct path
-});
-
-// Book seats route
-router.post('/api/bookSeats', isAuthenticated, async (req, res) => {
-    const { date, seats } = req.body;
-
-    try {
-        const userId = req.session.userId || req.user.id; // Get user ID from session or OAuth
-
-        // Check if seats are already booked
-        const existingBooking = await Booking.findOne({ date, seats: { $in: seats } });
-        if (existingBooking) {
-            return res.status(400).json({ message: 'One or more seats are already booked.' });
-        }
-
-        const newBooking = new Booking({ userId, date, seats });
-        await newBooking.save();
-        res.status(200).json({ message: 'Booking successful' });
-    } catch (error) {
-        console.error('Error during booking:', error);
-        res.status(500).json({ message: 'Server error during booking' });
+router.get('/admin', (req, res) => {
+    if (req.session.userId) {
+        res.sendFile(path.join(__dirname, '..', 'views', 'admin.html'));
+    } else {
+        res.redirect('/login?error=Please log in to continue');
     }
 });
 
