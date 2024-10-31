@@ -162,5 +162,22 @@ router.get('/logout', (req, res) => {
         res.redirect('/');
     });
 });
+// Fetch event details for the eventdetails page
+router.get('/eventdetails', async (req, res) => {
+    const { eventName } = req.query;
+
+    try {
+        const eventDetails = await Event.findOne({ eventName: eventName });
+
+        if (!eventDetails) {
+            return res.status(404).send('Event not found');
+        }
+
+        res.render('eventdetails', { event: eventDetails }); // Render eventdetails.ejs with event details
+    } catch (error) {
+        console.error("Error fetching event details:", error);
+        res.status(500).send('An error occurred while fetching event details.');
+    }
+});
 
 module.exports = router;

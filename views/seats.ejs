@@ -130,19 +130,13 @@
     <!-- Dropdown Menu -->
     <div id="dropdownMenu" class="dropdown-menu">
         <a href="/profile">Profile</a>
+        <a href="/eventdetails?eventName=<%= encodeURIComponent(event.eventName) %>">View Event Details</a>
         <a href="/" onclick="logout()">Logout</a>
     </div>
 
     <div class="container">
         <h1>Your Seat Awaits!</h1>
-        <h2>Event Details</h2>
-        <div>
-            <h2><%= event.eventName %></h2>
-            <p>Date: <%= event.eventDate.toISOString().split('T')[0] %></p>
-            <p>Location: <%= event.location %></p>
-            <p>End Time: <%= event.endTime %></p>
-            <p>Seats Available: <%= event.chairsAvailable %></p>
-        </div>
+      
 
         <h2>Select Your Seats</h2>
         <div class="booking">

@@ -18,7 +18,7 @@ body {
     justify-content: space-between;
     align-items: center;
     background-color: #4542c5;
-    padding:30px;
+    padding:10px;
     font-weight: bolder;
 }
 
@@ -44,6 +44,7 @@ body {
     text-decoration: none;
     color: #fff;
     transition: color 0.3s, transform 0.3s;
+    margin-right: 15px;
 }
 
 .nav-links a:hover {
@@ -127,10 +128,12 @@ body {
 .container {
     flex: 1;
     width: 1500px; /* Increased width */
-    height: 550px;
+    height: 450px;
     background: #f5f5f5;
     box-shadow: 0 30px 50px #dbdbdb;
     position: relative;
+    margin-top: 1px;
+    
 }
 
 /* Slide and Item styles */
