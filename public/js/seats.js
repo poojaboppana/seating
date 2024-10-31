@@ -6,7 +6,7 @@ const seatCountInput = document.getElementById('seatCount');
 const bookButton = document.getElementById('bookButton');
 const notAvailableMessage = document.getElementById('notAvailableMessage');
 
-const totalSeats = 100; // Total number of seats
+// Use the dynamically passed totalSeats value from the server-side
 let bookedSeats = 0;
 
 // Initialize seats
@@ -15,11 +15,12 @@ async function initSeats() {
     const bookedSeatsFromStorage = JSON.parse(localStorage.getItem('bookedSeats')) || [];
     bookedSeats = bookedSeatsFromStorage.length; // Update bookedSeats count
 
+    // Loop through the number of available seats
     for (let i = 0; i < totalSeats; i++) {
         const seat = document.createElement('div');
         seat.classList.add('seat');
         seat.dataset.seatNumber = i + 1; // Assign a unique seat number
-        seat.innerHTML = `<span class="seat-number">${i + 1}</span><img src="/css/chair.jpeg" alt="Chair">`;
+        seat.innerHTML = `<span class="seat-number">${i + 1}</span><img src="/css/chair.jpeg" alt="Chair" style="width: 30px;">`; // Adjust chair image size
         seat.addEventListener('click', () => selectSeat(seat));
 
         // Check if the seat is booked
@@ -38,16 +39,29 @@ async function initSeats() {
     updateAvailableCount();
 }
 
-// Function to select seats based on user input
+// Select a seat
 function selectSeat(seat) {
-    if (!seat.classList.contains('booked')) {
-        seat.classList.toggle('selected'); // Toggle selected state
-    } else {
-        showAlert("Sorry, this seat is already booked."); // Alert message for already booked seat
+    if (seat.classList.contains('booked')) {
+        return; // Prevent selecting a booked seat
     }
+    seat.classList.toggle('selected'); // Toggle selected state
+    updateAvailableCount(); // Update available count when seat selection changes
+}
+
+// Update available seat count
+function updateAvailableCount() {
+    const availableSeats = totalSeats - bookedSeats;
+    const selectedSeats = document.querySelectorAll('.seat.selected').length;
+    availableCount.textContent = availableSeats - selectedSeats; // Show available seats after selection
+}
+
+// Show alert for validation errors
+function showAlert(message) {
+    alert(message); // Simple alert for demonstration
 }
 
 // Book selected seats
+bookButton.addEventListener('click', bookSeats);
 function bookSeats() {
     const requestedSeats = parseInt(seatCountInput.value);
     const selectedSeats = document.querySelectorAll('.seat.selected');
@@ -70,7 +84,7 @@ function bookSeats() {
 
     // Check if selected seats match the requested number
     if (selectedSeats.length !== requestedSeats) {
-        showAlert(`Please select exactly ${requestedSeats} seats.`);
+        showAlert(`Please select exactly ${requestedSeats} seats.`); // Corrected string interpolation
         return;
     }
 
@@ -80,55 +94,31 @@ function bookSeats() {
     });
 
     // Clear selection after booking
-    document.querySelectorAll('.seat.selected').forEach(seat => {
+    selectedSeats.forEach(seat => {
         seat.classList.remove('selected');
     });
 
-    // Display success message
-    showSuccessMessage(`Successfully booked ${requestedSeats} seats! Available Seats: ${totalSeats - bookedSeats}`);
-}
-
-// Book a single seat
-function bookSeat(seat) {
-    if (!seat.classList.contains('booked')) {
-        seat.classList.add('booked');
-        bookedSeats++;
-        updateAvailableCount();
-
-        // Save booked seat number to localStorage
-        saveBookedSeats(seat.dataset.seatNumber);
-    }
-}
-
-// Save booked seats to localStorage
-function saveBookedSeats(seatNumber) {
-    const bookedSeatsFromStorage = JSON.parse(localStorage.getItem('bookedSeats')) || [];
-    bookedSeatsFromStorage.push(parseInt(seatNumber));
-    localStorage.setItem('bookedSeats', JSON.stringify(bookedSeatsFromStorage));
-}
-
-// Show a success message in the designated area
-function showSuccessMessage(msg) {
-    successMessage.textContent = msg;
-    successMessage.style.display = 'block';
+    // Corrected success message to include booked seats and available seats
+    const availableSeatsAfterBooking = totalSeats - bookedSeats; // Calculate available seats after booking
+    successMessage.textContent = `Successfully booked ${requestedSeats} seat(s)! Available Seats: ${availableSeatsAfterBooking}`;
+    successMessage.style.display = 'block'; // Show success message
     setTimeout(() => {
-        successMessage.style.display = 'none'; // Hide the message after 3 seconds
+        successMessage.style.display = 'none'; // Hide after 3 seconds
     }, 3000);
+
+    // Update available seat count
+    updateAvailableCount();
 }
 
-// Update available seat count
-function updateAvailableCount() {
-    const availableSeats = totalSeats - bookedSeats;
-    availableCount.textContent = availableSeats;
+// Function to book a seat
+function bookSeat(seat) {
+    const seatNumber = parseInt(seat.dataset.seatNumber);
+    bookedSeats += 1; // Increment booked seats count
+    seat.classList.add('booked'); // Mark seat as booked
+    // Store booked seat number in localStorage
+    const currentBookedSeats = JSON.parse(localStorage.getItem('bookedSeats')) || [];
+    localStorage.setItem('bookedSeats', JSON.stringify([...currentBookedSeats, seatNumber]));
 }
 
-// Show alert for user messages
-function showAlert(message) {
-    alert(message);
-}
-
-// Event listener for the book button
-bookButton.addEventListener('click', bookSeats);
-
-// Initialize the seat map
-initSeats();
+// Initialize seats when the page loads
+document.addEventListener('DOMContentLoaded', initSeats);

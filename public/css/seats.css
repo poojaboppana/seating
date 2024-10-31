@@ -1,16 +1,68 @@
 body {
     font-family: Arial, sans-serif;
     background-color: white;
-    margin-top: 1px;
     padding: 10px;
     background-image: url(/css/img3.webp);
     background-repeat: no-repeat;
     background-size: cover;
     font-size: 20px;
-    margin-top: 2px;
 }
 
-/* Add this section for the logout button styling */
+.container {
+    max-width: 800px; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Centers the container horizontally */
+    text-align: center; /* Centers the text inside the container */
+    padding: 20px; /* Adds some padding inside the container */
+  /* Background color with some transparency */
+    border-radius: 10px; /* Rounds the corners of the container */
+}
+
+.seats {
+    display: flex; /* Display seats in a row */
+    flex-wrap: wrap; /* Allow seats to wrap to the next line */
+    justify-content: center; /* Center the seats horizontally */
+    margin-top: 20px; /* Space above the seat row */
+}
+
+.seat {
+    width: 50px; /* Width of each seat */
+    height: 50px; /* Height of each seat */
+    margin: 5px; /* Space between seats */
+    display: flex; /* Center content inside the seat */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    border: 2px solid #000; /* Border for the seats */
+    border-radius: 5px; /* Rounded corners for the seats */
+    background-color: #fff; /* Default background color for available seats */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Add hover effect */
+}
+
+.seat:hover {
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    box-shadow: 0 0 10px blue; /* Add shadow on hover */
+}
+
+.seat.selected {
+    background-color: yellow; /* Color for selected seats */
+}
+
+.seat.booked {
+    background-color: red; /* Color for booked seats */
+    color: white; /* Text color */
+    cursor: not-allowed; /* Not-allowed cursor for booked seats */
+}
+
+.seat.trying-to-book {
+    background-color: yellow; /* Color for trying to book seats */
+}
+
+.seat.available {
+    background-color: green; /* Color for available seats */
+    color: white; /* Text color */
+}
+
+/* Logout button styling */
 .logout-button {
     position: absolute; /* Position the button absolutely */
     top: 20px; /* Adjust the top position */
@@ -45,7 +97,7 @@ body {
     transform: translate(-50%, -50%);
     width: 300px;
     height: 100px;
-    background-color: white; /* Green background with slight transparency */
+    background-color: white; /* Background color */
     color: black;
     padding: 20px 40px;
     font-size: 1.5em;
@@ -59,18 +111,9 @@ h1 {
     color: transparent; /* Makes the text itself transparent */
     -webkit-background-clip: text; /* Clips the image to the text */
     background-clip: text;
-    text-align: center;
     margin: 20px 0;
     color: white;
     text-shadow: 2px 2px 4px black;
-}
-
-.container {
-    text-align: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    margin-left: 90px;
-    color: white;   
 }
 
 .seat-wrapper {
@@ -112,40 +155,6 @@ h1 {
 .right-half {
     margin-left: 60px;
     margin-right: 60px;
-}
-
-.seat {
-    width: 50px;
-    height: 50px;
-    border: 1px solid #000;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
-    position: relative;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    background-color: #fff;
-}
-
-.seat:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 10px blue;
-    background-color: #e7f3ff;
-}
-
-.seat.selected {
-    background-color: yellow;
-}
-
-.seat.booked {
-    background-color: #dc3545;
-    cursor: not-allowed;
-}
-
-.seat img {
-    width: 30px;
-    height: auto;
 }
 
 .seat-number {

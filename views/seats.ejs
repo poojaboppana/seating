@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seating Planner</title>
+    <link rel="stylesheet" href="/css/seats.css">
+    <style>
+        /* Hamburger Icon Styling */
+        .hamburger {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hamburger div {
+            height: 4px;
+            background-color: #333;
+            border-radius: 2px;
+        }
+
+        /* Dropdown Menu Styling */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 20px;
+            background-color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Seat Map Styling */
+        .seat-map {
+        
+            height: auto;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+
+        .seat-container {
+            display: flex;
+            justify-content: center; /* Center the seat halves */
+            flex-wrap: wrap; /* Allow seats to wrap onto the next line */
+        }
+
+        .left-half, .right-half {
+            flex: 1; /* Allow the halves to adjust in size */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            position: relative;
+            display: flex; /* Enable flexbox for seats */
+            flex-wrap: wrap; /* Allow seats to wrap onto the next line */
+            align-items: center; /* Center seats vertically */
+            justify-content: center; /* Center seats horizontally */
+            padding: 10px; /* Add padding for aesthetics */
+            box-sizing: border-box; /* Include padding in width calculations */
+        }
+
+        .seat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 5px; /* Reduced margin to prevent overflow */
+            cursor: pointer;
+            border: 1px solid #333;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            width: 60px; /* Set a fixed width for seats */
+            height: 50px; /* Set a fixed height for seats */
+        }
+
+        .seat.booked {
+            opacity: 0.5; /* Indicate booked seat */
+            background-color: red;
+        }
+
+        .seat.selected {
+            border: 2px solid blue; /* Indicate selected seat */
+            background-color: yellow;
+        }
+
+        .info {
+            margin-top: 20px;
+        }
+
+        #successMessage {
+            color: green;
+            font-size: 20px;
+            display: none;
+        }
+
+        #notAvailableMessage {
+            color: red;
+            font-size: 40px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hamburger Menu Icon -->
+    <div class="hamburger" onclick="toggleDropdown()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div id="dropdownMenu" class="dropdown-menu">
+        <a href="/profile">Profile</a>
+        <a href="/" onclick="logout()">Logout</a>
+    </div>
+
+    <div class="container">
+        <h1>Your Seat Awaits!</h1>
+        <h2>Event Details</h2>
+        <div>
+            <h2><%= event.eventName %></h2>
+            <p>Date: <%= event.eventDate.toISOString().split('T')[0] %></p>
+            <p>Location: <%= event.location %></p>
+            <p>End Time: <%= event.endTime %></p>
+            <p>Seats Available: <%= event.chairsAvailable %></p>
+        </div>
+
+        <h2>Select Your Seats</h2>
+        <div class="booking">
+            <label for="seatCount">How many seats do you want to book?</label><br>
+            <input type="number" id="seatCount" min="1" placeholder="Enter number of seats"><br>
+            <br>
+            <button id="bookButton">Book Seats</button>
+        </div>
+
+        <div id="seatMap" class="seat-map">
+            <div class="seat-container">
+                <div class="left-half"></div>
+                <div class="right-half"></div>
+            </div>
+        </div>
+
+        <div class="info">
+            <div id="notAvailableMessage"></div>
+            <p>Available Seats: <span id="availableCount">0</span></p>
+        </div>
+    </div>
+
+    <!-- Success Message Popup -->
+    <div id="successMessage"></div>
+
+    <script src="/js/seats.js"></script>
+    <script>
+        // Toggle dropdown menu visibility
+        const totalSeats = <%= event.chairsAvailable %>;
+
+        function toggleDropdown() {
+            const dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+        }
+
+        // Logout function
+        function logout() {
+            window.location.href = "/"; // Replace with actual logout functionality if needed
+        }
+
+        // Close the dropdown menu if clicked outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.hamburger') && !event.target.closest('.dropdown-menu')) {
+                document.getElementById("dropdownMenu").style.display = "none";
+            }
+        }
+
+        // Function to render seats based on selected count
+        document.getElementById('bookButton').addEventListener('click', function() {
+            const seatCount = parseInt(document.getElementById('seatCount').value);
+            const leftHalf = document.querySelector('.left-half');
+            const rightHalf = document.querySelector('.right-half');
+
+            // Clear existing seats
+            leftHalf.innerHTML = '';
+            rightHalf.innerHTML = '';
+
+            // Validate seat count
+            if (seatCount < 1 || seatCount > totalSeats) {
+                document.getElementById('notAvailableMessage').innerText = "Please enter a valid number of seats.";
+                document.getElementById('notAvailableMessage').style.display = "block";
+                return;
+            } else {
+                document.getElementById('notAvailableMessage').style.display = "none";
+            }
+
+            // Render seats dynamically
+            for (let i = 0; i < seatCount; i++) {
+                const seat = document.createElement('div');
+                seat.className = 'seat';
+                seat.innerText = `Seat ${i + 1}`;
+                seat.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+
+                if (i < Math.ceil(seatCount / 2)) {
+                    leftHalf.appendChild(seat);
+                } else {
+                    rightHalf.appendChild(seat);
+                }
+            }
+
+            // Update available count
+            document.getElementById('availableCount').innerText = totalSeats - seatCount;
+            document.getElementById('successMessage').innerText = "Seats successfully booked!";
+            document.getElementById('successMessage').style.display = "block";
+        });
+    </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Page</title>
+    <title>Admin Event Page</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
     <style>
         body {
@@ -29,18 +29,23 @@
         h1 {
             color: #333;
         }
-        .event-description {
-            margin-bottom: 20px;
+        .form-group {
+            margin-bottom: 15px;
         }
-        .attendee-list {
-            list-style: none;
-            padding: 0;
+        label {
+            display: block;
+            margin-bottom: 5px;
         }
-        .attendee-list li {
-            padding: 8px;
-            border-bottom: 1px solid #ccc;
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
-        .back-button {
+        .submit-button {
             display: inline-block;
             padding: 10px 15px;
             background-color: #007BFF;
@@ -48,43 +53,114 @@
             text-decoration: none;
             border-radius: 5px;
             margin-top: 20px;
+            cursor: pointer;
+            border: none;
         }
-        .back-button:hover {
+        .submit-button:hover {
             background-color: #0056b3;
+        }
+        .event-details {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Event Details</h1>
+    <h1>Admin Event Form</h1>
 </header>
 
 <div class="container">
-    <h2 class="event-title">Annual Charity Gala</h2>
-    <p class="event-description">
-        Join us for our Annual Charity Gala, where we come together to support a great cause. Enjoy an evening of entertainment, fine dining, and fundraising activities.
-    </p>
-    
-    <h3>Event Details:</h3>
-    <ul>
-        <li><strong>Date:</strong> December 15, 2024</li>
-        <li><strong>Time:</strong> 6:00 PM - 10:00 PM</li>
-        <li><strong>Location:</strong> Grand Ballroom, City Hall</li>
-    </ul>
+    <h2>Enter Event Details</h2>
+    <form id="eventForm">
+        <div class="form-group">
+            <label for="eventName">Event Name:</label>
+            <input type="text" id="eventName" name="eventName" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="eventDate">Event Date:</label>
+            <input type="date" id="eventDate" name="eventDate" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="startTime">Start Time:</label>
+            <input type="time" id="startTime" name="startTime" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="endTime">End Time:</label>
+            <input type="time" id="endTime" name="endTime" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="chairsAvailable">Number of Chairs Available:</label>
+            <input type="number" id="chairsAvailable" name="chairsAvailable" required>
+        </div>
 
-    <h3>Attendees:</h3>
-    <ul class="attendee-list">
-        <li>John Doe</li>
-        <li>Jane Smith</li>
-        <li>Emily Johnson</li>
-        <li>Michael Brown</li>
-        <li>Sarah Davis</li>
-        <!-- You can dynamically populate this list with attendees from your database -->
-    </ul>
+        <button type="submit" class="submit-button">Submit Event</button>
+    </form>
 
-    <a href="/" class="back-button">Back to Home</a>
+    <div id="eventDetails" class="event-details" style="display: none;">
+        <h3>Event Submitted:</h3>
+        <p id="details"></p>
+        <button id="newEventButton" class="submit-button">Create New Event</button>
+    </div>
 </div>
+
+<script>
+    let isEventActive = false; // Flag to check if an event is active
+
+    document.getElementById('eventForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        
+        if (isEventActive) {
+            alert("An event is already in progress. Please wait until it ends to create a new one.");
+            return; // Prevent creating a new event if one is active
+        }
+
+        // Get form values
+        const eventData = {
+            eventName: document.getElementById('eventName').value,
+            eventDate: document.getElementById('eventDate').value,
+            startTime: document.getElementById('startTime').value,
+            endTime: document.getElementById('endTime').value,
+            location: document.getElementById('location').value,
+            chairsAvailable: document.getElementById('chairsAvailable').value
+        };
+
+        // Send data to server
+        const response = await fetch('/events', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(eventData),
+        });
+
+        if (response.ok) {
+            const eventDetails = await response.json();
+            isEventActive = true; // Set the event as active
+            document.getElementById('details').innerText = `Name: ${eventDetails.eventName}, Date: ${eventDetails.eventDate}, Start Time: ${eventDetails.startTime}, End Time: ${eventDetails.endTime}, Location: ${eventDetails.location}, Chairs Available: ${eventDetails.chairsAvailable}`;
+            document.getElementById('eventDetails').style.display = 'block';
+            this.reset(); // Reset the form after submission
+        } else {
+            console.error('Error submitting event:', response.statusText);
+        }
+    });
+
+    document.getElementById('newEventButton').addEventListener('click', function() {
+        document.getElementById('eventDetails').style.display = 'none';
+    });
+</script>
 
 </body>
 </html>

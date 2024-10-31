@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -7,6 +6,7 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const authRoutes = require('./routes/auth');
 const Admin = require('./models/admin'); // Adjust path to your admin model
+const Event = require('./models/event'); // Ensure this is correct
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,15 +27,12 @@ app.use(session({
     saveUninitialized: false,
 }));
 
-// Initialize Passport (make sure to add the passport configuration)
-app.use(passport.initialize());
-app.use(passport.session());
-
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost:27017/arrangement', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(async () => {
+mongoose.connect('mongodb://localhost:27017/arrangement')
+    .then(() => {
         console.log("Connected to MongoDB");
-        await initializeAdmin(); // Initialize admin on startup
+        // Initialize admin user if needed
+        initializeAdmin(); // Call the function to initialize the admin user
     })
     .catch(err => console.error("MongoDB connection error:", err));
 
@@ -63,6 +60,27 @@ async function initializeAdmin() {
     }
 }
 
+// POST endpoint to create an event
+app.post('/events', async (req, res) => {
+    try {
+        const event = new Event(req.body);
+        await event.save();
+        res.status(201).json(event);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+// GET endpoint to retrieve events
+app.get('/events', async (req, res) => {
+    try {
+        const events = await Event.find();
+        res.json(events);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
+
 // Use the auth routes for login and signup
 app.use(authRoutes);
 
@@ -76,6 +94,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'home.html'));
 });
 
+// Other routes
 app.get('/contact', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'contact.html'));
 });
@@ -90,6 +109,9 @@ app.get('/about', (req, res) => {
 
 app.get('/profile', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'profile.html'));
+});
+app.get('/event', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'event.html'));
 });
 
 // Start the server
