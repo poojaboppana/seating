@@ -1,160 +1,90 @@
 body {
     font-family: Arial, sans-serif;
     background-color: white;
+    margin: 0; /* Remove default body margin */
     padding: 10px;
     background-image: url(/css/img3.webp);
     background-repeat: no-repeat;
     background-size: cover;
     font-size: 20px;
+    display: flex; /* Use flexbox for centering */
+    flex-direction: column; /* Arrange elements in a column */
+    align-items: center; /* Center all children horizontally */
 }
 
+/* Center the container */
 .container {
-    max-width: 800px; /* Adjust the maximum width as needed */
-    margin: 0 auto; /* Centers the container horizontally */
-    text-align: center; /* Centers the text inside the container */
-    padding: 20px; /* Adds some padding inside the container */
-  /* Background color with some transparency */
-    border-radius: 10px; /* Rounds the corners of the container */
-}
-
-.seats {
-    display: flex; /* Display seats in a row */
-    flex-wrap: wrap; /* Allow seats to wrap to the next line */
-    justify-content: center; /* Center the seats horizontally */
-    margin-top: 20px; /* Space above the seat row */
-}
-
-.seat {
-    width: 50px; /* Width of each seat */
-    height: 50px; /* Height of each seat */
-    margin: 5px; /* Space between seats */
-    display: flex; /* Center content inside the seat */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    border: 2px solid #000; /* Border for the seats */
-    border-radius: 5px; /* Rounded corners for the seats */
-    background-color: #fff; /* Default background color for available seats */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Add hover effect */
-}
-
-.seat:hover {
-    transform: scale(1.05); /* Slightly enlarge on hover */
-    box-shadow: 0 0 10px blue; /* Add shadow on hover */
-}
-
-.seat.selected {
-    background-color: yellow; /* Color for selected seats */
-}
-
-.seat.booked {
-    background-color: red; /* Color for booked seats */
-    color: white; /* Text color */
-    cursor: not-allowed; /* Not-allowed cursor for booked seats */
-}
-
-.seat.trying-to-book {
-    background-color: yellow; /* Color for trying to book seats */
-}
-
-.seat.available {
-    background-color: green; /* Color for available seats */
-    color: white; /* Text color */
-}
-
-/* Logout button styling */
-.logout-button {
-    position: absolute; /* Position the button absolutely */
-    top: 20px; /* Adjust the top position */
-    right: 20px; /* Adjust the right position */
-    z-index: 1000; /* Make sure it appears above other elements */
-}
-
-.logout-button a {
-    padding: 10px 15px;
-    background-color: #dc3545; /* Red background for logout */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.logout-button a:hover {
-    background-color: #c82333; /* Darker red on hover */
-}
-
-/* Success message styling */
-#successMessage {
-    display: none;
-    position: fixed;
-    border-radius: 50px;
-    box-shadow: 10px 10px 20px pink;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 300px;
-    height: 100px;
-    background-color: white; /* Background color */
-    color: black;
-    padding: 20px 40px;
-    font-size: 1.5em;
-    padding-top: 40px;
     text-align: center;
-    z-index: 1000;
-}
-
-h1 {
-    font-size: 3em;
-    color: transparent; /* Makes the text itself transparent */
-    -webkit-background-clip: text; /* Clips the image to the text */
-    background-clip: text;
-    margin: 20px 0;
+    max-width: 1200px; /* Set max width for the container */
+    margin: 0 auto; /* Center the container */
     color: white;
-    text-shadow: 2px 2px 4px black;
 }
 
-.seat-wrapper {
-    margin: 20px 0;
-}
-
+/* Center the seat map */
 .seat-map {
-    background-image: url(/css/img7.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
     display: flex;
-    width: 1260px;
-    height: 380px;
-    justify-content: center;
-    margin: 20px auto;
-    border-radius: 50px;
+    justify-content: center; /* Center the seat map */
+    margin: 20px 0; /* Space above and below the seat map */
 }
 
+/* Adjust seat container to be centered */
 .seat-container {
-    margin-top: 2px;
     padding: 20px; /* Spacing inside the container */
     border-radius: 10px; /* Rounded corners */
     display: flex;
     justify-content: space-between; /* Space between left and right halves */
-    max-width: 1220px; /* Maximum width for seat container */
-    margin: 20px auto;
+    max-width: 1060px; /* Maximum width for seat container */
     box-shadow: 20px 20px 40px pink;
 }
 
+/* Layout for left and right halves */
 .left-half,
 .right-half {
     display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 7px;
-    flex: 15;
-    max-width: 1300px;
+    grid-template-columns: repeat(10, 1fr); /* 10 columns */
+    gap: 7px; /* Space between seats */
+    border: 1px solid white;
+    padding: 10px;
 }
 
+/* Center the right half */
 .right-half {
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 20px; /* Space between left and right halves */
+}
+
+/* Ensure seats are positioned correctly */
+.seat {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #000;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    background-color: #fff;
+}
+
+.seat:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px blue;
+    background-color: #e7f3ff;
+}
+
+.seat.selected {
+    background-color: yellow;
+}
+
+.seat.booked {
+    background-color: #dc3545;
+    cursor: not-allowed;
+}
+
+.seat img {
+    width: 20px;
+    height: auto;
 }
 
 .seat-number {
@@ -166,8 +96,10 @@ h1 {
     color: #000;
 }
 
+/* Booking section styling */
 .booking {
     margin-bottom: 20px;
+    text-align: center; /* Center text within the booking section */
 }
 
 .booking label {
@@ -213,12 +145,35 @@ h1 {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Info section styling */
 .info {
     margin-top: 20px;
     font-size: 20px;
     color: #000;
+    text-align: center; /* Center the info section */
 }
 
+/* Success message styling */
+#successMessage {
+    display: none;
+    position: fixed;
+    border-radius: 50px;
+    box-shadow: 10px 10px 20px pink;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 100px;
+    background-color: white; /* Green background with slight transparency */
+    color: black;
+    padding: 20px 40px;
+    font-size: 1.5em;
+    padding-top: 40px;
+    text-align: center;
+    z-index: 1000;
+}
+
+/* Message styling */
 #message {
     width: 400px;
     text-align: center;
@@ -227,3 +182,29 @@ h1 {
     margin-top: 10px;
     transition: opacity 0.5s ease;
 }
+/* Center the seat map */
+.seat-map {
+    display: flex;
+    justify-content: center; /* Center the seat map horizontally */
+    margin: 20px 0; /* Space above and below the seat map */
+    background-image: url(/css/img7.jpg); /* Set background image */
+    background-size: cover; /* Ensure the image covers the area */
+    background-position: center; /* Center the background image */
+    width: 100%; /* Set to 100% to occupy full width of the container */
+    height: auto; /* Allow height to adjust based on content */
+    padding: 20px; /* Add padding for spacing */
+    position: relative; /* Position relative for absolute children if needed */
+    border-radius: 40px;
+}
+
+/* Additional styles for the seat container */
+.seat-container {
+   
+    border-radius: 10px; /* Rounded corners */
+    display: flex;
+    justify-content: space-between; /* Space between left and right halves */
+    width: 1200px; /* Maximum width for seat container */
+   margin-left: -40px;
+    height: auto;/* Padding for the seat container */
+}
+

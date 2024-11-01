@@ -18,7 +18,7 @@
             flex-direction: column;
             justify-content: space-between;
         }
-
+        
         .hamburger div {
             height: 4px;
             background-color: #333;
@@ -50,71 +50,52 @@
             background-color: #f1f1f1;
         }
 
-        /* Seat Map Styling */
+        /* Seat Styling */
         .seat-map {
-        
-            height: auto;
-            margin-left: auto;
-            margin-right: auto;
-            
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
         }
-
+        
         .seat-container {
             display: flex;
-            justify-content: center; /* Center the seat halves */
-            flex-wrap: wrap; /* Allow seats to wrap onto the next line */
         }
 
         .left-half, .right-half {
-            flex: 1; /* Allow the halves to adjust in size */
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            position: relative;
-            display: flex; /* Enable flexbox for seats */
-            flex-wrap: wrap; /* Allow seats to wrap onto the next line */
-            align-items: center; /* Center seats vertically */
-            justify-content: center; /* Center seats horizontally */
-            padding: 10px; /* Add padding for aesthetics */
-            box-sizing: border-box; /* Include padding in width calculations */
+            display: flex;
+            flex-direction: column;
+            margin: 0 10px;
         }
 
         .seat {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 5px; /* Reduced margin to prevent overflow */
-            cursor: pointer;
-            border: 1px solid #333;
+            margin: 5px;
+            padding: 10px;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            transition: background-color 0.3s;
-            width: 60px; /* Set a fixed width for seats */
-            height: 50px; /* Set a fixed height for seats */
-        }
-
-        .seat.booked {
-            opacity: 0.5; /* Indicate booked seat */
-            background-color: red;
+            cursor: pointer;
+            text-align: center;
         }
 
         .seat.selected {
-            border: 2px solid blue; /* Indicate selected seat */
-            background-color: yellow;
+            background-color: #a8e6cf;
         }
 
-        .info {
-            margin-top: 20px;
+        .seat.booked {
+            background-color: #ff8b8b;
+            pointer-events: none; /* Prevent clicking booked seats */
         }
 
+        /* Success Message */
         #successMessage {
-            color: green;
-            font-size: 20px;
+            margin-top: 20px;
             display: none;
+            color: green;
         }
 
+        /* Not Available Message */
         #notAvailableMessage {
+            margin-top: 20px;
             color: red;
-            font-size: 40px;
             display: none;
         }
     </style>
@@ -136,13 +117,10 @@
 
     <div class="container">
         <h1>Your Seat Awaits!</h1>
-      
-
         <h2>Select Your Seats</h2>
         <div class="booking">
             <label for="seatCount">How many seats do you want to book?</label><br>
-            <input type="number" id="seatCount" min="1" placeholder="Enter number of seats"><br>
-            <br>
+            <input type="number" id="seatCount" min="1" placeholder="Enter number of seats"><br><br>
             <button id="bookButton">Book Seats</button>
         </div>
 
@@ -161,69 +139,163 @@
 
     <!-- Success Message Popup -->
     <div id="successMessage"></div>
+    <h1 id="totalSeats">totalSeats = <%= event.chairsAvailable %>;</h1>
+    <h1 id="eventName">eventName=<%= event.eventName %>;</h1>
 
-    <script src="/js/seats.js"></script>
+
     <script>
-        // Toggle dropdown menu visibility
-        const totalSeats = <%= event.chairsAvailable %>;
+      // Variables to manage seats
+const leftHalf = document.querySelector('.left-half');
+const rightHalf = document.querySelector('.right-half');
+const availableCount = document.getElementById('availableCount');
+const successMessage = document.getElementById('successMessage');
+const seatCountInput = document.getElementById('seatCount');
+const bookButton = document.getElementById('bookButton');
+const notAvailableMessage = document.getElementById('notAvailableMessage');
 
-        function toggleDropdown() {
-            const dropdownMenu = document.getElementById("dropdownMenu");
-            dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+// Use the dynamically passed totalSeats value from the server-side
+const totalSeatsElement = document.getElementById('totalSeats');
+const totalSeats = parseInt(totalSeatsElement.textContent.split('=')[1].trim(), 10); // Extract the numeric part
+const eventNameElement= document.getElementById('eventName');
+const eventName = eventNameElement.textContent.split('=')[1].trim(); // Extract event name
+
+console.log('Event Name:', eventName);
+
+// Dynamic seat count from server
+let bookedSeats = 0;
+
+// Initialize seats function
+async function initSeats() {
+    // Get booked seats from localStorage using event name as the key
+    const bookedSeatsFromStorage = JSON.parse(localStorage.getItem(`bookedSeats_${eventName}`)) || [];
+    bookedSeats = bookedSeatsFromStorage.length; // Update bookedSeats count
+
+    // Loop through the number of available seats
+    for (let i = 0; i < totalSeats; i++) {
+        const seat = document.createElement('div');
+        seat.classList.add('seat');
+        seat.dataset.seatNumber = i + 1; // Assign a unique seat number
+        seat.innerHTML = `<span class="seat-number">${i + 1}</span><img src="/css/chair.jpeg" alt="Chair" style="width: 30px;">`; // Adjust chair image size
+        seat.addEventListener('click', () => selectSeat(seat));
+
+        // Check if the seat is booked
+        if (bookedSeatsFromStorage.includes(i + 1)) {
+            seat.classList.add('booked'); // Mark as booked
         }
 
-        // Logout function
-        function logout() {
-            window.location.href = "/"; // Replace with actual logout functionality if needed
+        // Add seats to left or right half based on index
+        if (i < totalSeats / 2) {
+            leftHalf.appendChild(seat);
+        } else {
+            rightHalf.appendChild(seat);
         }
+    }
 
-        // Close the dropdown menu if clicked outside
-        window.onclick = function(event) {
-            if (!event.target.matches('.hamburger') && !event.target.closest('.dropdown-menu')) {
-                document.getElementById("dropdownMenu").style.display = "none";
-            }
-        }
+    updateAvailableCount();
+}
 
-        // Function to render seats based on selected count
-        document.getElementById('bookButton').addEventListener('click', function() {
-            const seatCount = parseInt(document.getElementById('seatCount').value);
-            const leftHalf = document.querySelector('.left-half');
-            const rightHalf = document.querySelector('.right-half');
+// Select a seat function
+function selectSeat(seat) {
+    if (seat.classList.contains('booked')) {
+        return; // Prevent selecting a booked seat
+    }
+    seat.classList.toggle('selected'); // Toggle selected state
+    updateAvailableCount(); // Update available count when seat selection changes
+}
 
-            // Clear existing seats
-            leftHalf.innerHTML = '';
-            rightHalf.innerHTML = '';
+// Update available seat count function
+function updateAvailableCount() {
+    const availableSeats = totalSeats - bookedSeats;
+    const selectedSeats = document.querySelectorAll('.seat.selected').length;
+    availableCount.textContent = availableSeats - selectedSeats; // Show available seats after selection
+}
 
-            // Validate seat count
-            if (seatCount < 1 || seatCount > totalSeats) {
-                document.getElementById('notAvailableMessage').innerText = "Please enter a valid number of seats.";
-                document.getElementById('notAvailableMessage').style.display = "block";
-                return;
-            } else {
-                document.getElementById('notAvailableMessage').style.display = "none";
-            }
+// Show alert for validation errors
+function showAlert(message) {
+    alert(message); // Simple alert for demonstration
+}
 
-            // Render seats dynamically
-            for (let i = 0; i < seatCount; i++) {
-                const seat = document.createElement('div');
-                seat.className = 'seat';
-                seat.innerText = `Seat ${i + 1}`;
-                seat.addEventListener('click', function() {
-                    this.classList.toggle('selected');
-                });
+// Book selected seats function
+bookButton.addEventListener('click', bookSeats);
+function bookSeats() {
+    const requestedSeats = parseInt(seatCountInput.value);
+    const selectedSeats = document.querySelectorAll('.seat.selected');
 
-                if (i < Math.ceil(seatCount / 2)) {
-                    leftHalf.appendChild(seat);
-                } else {
-                    rightHalf.appendChild(seat);
-                }
-            }
+    if (isNaN(requestedSeats) || requestedSeats < 1) {
+        showAlert("Please enter a valid number of seats.");
+        return;
+    }
 
-            // Update available count
-            document.getElementById('availableCount').innerText = totalSeats - seatCount;
-            document.getElementById('successMessage').innerText = "Seats successfully booked!";
-            document.getElementById('successMessage').style.display = "block";
-        });
+    // Check if requested seats exceed available seats
+    if (requestedSeats > (totalSeats - bookedSeats)) {
+        notAvailableMessage.textContent = "Not available"; // Show the not available message
+        notAvailableMessage.style.display = 'block'; // Make it visible
+        setTimeout(() => {
+            notAvailableMessage.style.display = 'none'; // Hide after 3 seconds
+        }, 3000);
+        return;
+    }
+
+    // Check if selected seats match the requested number
+    if (selectedSeats.length !== requestedSeats) {
+        showAlert(`Please select exactly ${requestedSeats} seats.`);
+        return;
+    }
+
+    // Book selected seats
+    selectedSeats.forEach(seat => {
+        bookSeat(seat);
+    });
+
+    // Clear selection after booking
+    selectedSeats.forEach(seat => {
+        seat.classList.remove('selected');
+    });
+
+    const availableSeatsAfterBooking = totalSeats - bookedSeats; // Calculate available seats after booking
+    successMessage.textContent = `Successfully booked ${requestedSeats} seat(s)! Available Seats: ${availableSeatsAfterBooking}`;
+    successMessage.style.display = 'block'; // Show success message
+    setTimeout(() => {
+        successMessage.style.display = 'none'; // Hide after 3 seconds
+    }, 3000);
+
+    // Update available seat count
+    updateAvailableCount();
+}
+
+// Function to toggle dropdown menu visibility
+function toggleDropdown() {
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    dropdownMenu.style.display = dropdownMenu.style.display === "block" ? "none" : "block";
+}
+
+// Logout function
+function logout() {
+    window.location.href = "/"; // Replace with actual logout functionality if needed
+}
+
+// Close the dropdown menu if clicked outside
+window.onclick = function(event) {
+    if (!event.target.matches('.hamburger') && !event.target.closest('.dropdown-menu')) {
+        document.getElementById("dropdownMenu").style.display = "none";
+    }
+}
+
+// Initialize seats on page load
+window.onload = initSeats;
+
+// Function to book a seat (modify this to update localStorage)
+function bookSeat(seat) {
+    const seatNumber = parseInt(seat.dataset.seatNumber, 10);
+    bookedSeats++; // Increment bookedSeats count
+    seat.classList.add('booked'); // Mark the seat as booked
+
+    // Update localStorage with the booked seat
+    let bookedSeatsFromStorage = JSON.parse(localStorage.getItem(`bookedSeats_${eventName}`)) || [];
+    bookedSeatsFromStorage.push(seatNumber);
+    localStorage.setItem(`bookedSeats_${eventName}`, JSON.stringify(bookedSeatsFromStorage));
+}
+
     </script>
 </body>
 </html>
