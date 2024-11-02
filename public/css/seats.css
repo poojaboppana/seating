@@ -1,61 +1,55 @@
 body {
     font-family: Arial, sans-serif;
     background-color: white;
-    margin: 0; /* Remove default body margin */
+    margin: 0;
     padding: 10px;
     background-image: url(/css/img3.webp);
     background-repeat: no-repeat;
     background-size: cover;
     font-size: 20px;
-    display: flex; /* Use flexbox for centering */
-    flex-direction: column; /* Arrange elements in a column */
-    align-items: center; /* Center all children horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Center the container */
 .container {
     text-align: center;
-    max-width: 1200px; /* Set max width for the container */
-    margin: 0 auto; /* Center the container */
+    max-width: 1200px;
+    margin: 0 auto;
     color: white;
 }
 
-/* Center the seat map */
 .seat-map {
     display: flex;
-    justify-content: center; /* Center the seat map */
-    margin: 20px 0; /* Space above and below the seat map */
+    justify-content: center;
+    margin: 20px 0;
 }
 
-/* Adjust seat container to be centered */
 .seat-container {
-    padding: 20px; /* Spacing inside the container */
-    border-radius: 10px; /* Rounded corners */
+    padding: 20px;
+    border-radius: 10px;
     display: flex;
-    justify-content: space-between; /* Space between left and right halves */
-    max-width: 1060px; /* Maximum width for seat container */
+    justify-content: space-between;
+    max-width: 1060px;
     box-shadow: 20px 20px 40px pink;
 }
 
-/* Layout for left and right halves */
 .left-half,
 .right-half {
     display: grid;
-    grid-template-columns: repeat(10, 1fr); /* 10 columns */
-    gap: 7px; /* Space between seats */
+    grid-template-columns: repeat(10, 1fr);
+    gap: 7px;
     border: 1px solid white;
     padding: 10px;
 }
 
-/* Center the right half */
 .right-half {
-    margin-left: 20px; /* Space between left and right halves */
+    margin-left: 20px;
 }
 
-/* Ensure seats are positioned correctly */
 .seat {
     width: 40px;
-    height: 40px;
+    height: 50px;
     border: 1px solid #000;
     cursor: pointer;
     display: flex;
@@ -96,10 +90,9 @@ body {
     color: #000;
 }
 
-/* Booking section styling */
 .booking {
     margin-bottom: 20px;
-    text-align: center; /* Center text within the booking section */
+    text-align: center;
 }
 
 .booking label {
@@ -145,15 +138,13 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Info section styling */
 .info {
     margin-top: 20px;
     font-size: 20px;
     color: #000;
-    text-align: center; /* Center the info section */
+    text-align: center;
 }
 
-/* Success message styling */
 #successMessage {
     display: none;
     position: fixed;
@@ -164,7 +155,7 @@ body {
     transform: translate(-50%, -50%);
     width: 300px;
     height: 100px;
-    background-color: white; /* Green background with slight transparency */
+    background-color: white;
     color: black;
     padding: 20px 40px;
     font-size: 1.5em;
@@ -173,7 +164,6 @@ body {
     z-index: 1000;
 }
 
-/* Message styling */
 #message {
     width: 400px;
     text-align: center;
@@ -182,29 +172,26 @@ body {
     margin-top: 10px;
     transition: opacity 0.5s ease;
 }
-/* Center the seat map */
+
 .seat-map {
     display: flex;
-    justify-content: center; /* Center the seat map horizontally */
-    margin: 20px 0; /* Space above and below the seat map */
-    background-image: url(/css/img7.jpg); /* Set background image */
-    background-size: cover; /* Ensure the image covers the area */
-    background-position: center; /* Center the background image */
-    width: 100%; /* Set to 100% to occupy full width of the container */
-    height: auto; /* Allow height to adjust based on content */
-    padding: 20px; /* Add padding for spacing */
-    position: relative; /* Position relative for absolute children if needed */
+    justify-content: center;
+    margin: 20px 0;
+    background-image: url(/css/img7.jpg);
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    position: relative;
     border-radius: 40px;
 }
 
-/* Additional styles for the seat container */
 .seat-container {
-   
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px;
     display: flex;
-    justify-content: space-between; /* Space between left and right halves */
-    width: 1200px; /* Maximum width for seat container */
-   margin-left: -40px;
-    height: auto;/* Padding for the seat container */
+    justify-content: space-between;
+    width: 1200px;
+    margin-left: -40px;
+    height: auto;
 }
-

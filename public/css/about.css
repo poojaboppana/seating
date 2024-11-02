@@ -1,40 +1,33 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
 
-/* Body styling */
 body {
-    /* Set a light background color for better contrast */
     background-color: #2a282f; 
 }
 
-/* About area styling */
 .about-area {
-    position: relative; /* Allow bubbles to position relative to this container */
-    background-color: #2a282f; /* Dark background for the about area */
-    height: 500px; /* Change to auto for flexibility */
-    display: flex; /* Flexbox for alignment */
-    align-items: center; /* Center items vertically */
-    justify-content: center; /* Center items horizontally */
-    flex-direction: column; /* Stack children vertically */
-     /* Reduced padding at the bottom */
-     padding: 15%;
+    position: relative;
+    background-color: #2a282f;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 15%;
 }
 
 .about-img {
-    /* Reduced margin-top to pull the image up */
     margin-top: 80px;
-    box-shadow: 8px 8px 20px rgba(255, 255, 255, 0.5); /* Softer shadow */
-    border-radius: 20px; /* Rounded corners for the image */
-    /* Change to cover to maintain aspect ratio */
-    width: 450px; /* Fixed width */
-    height: 250px; /* Fixed height */
+    box-shadow: 8px 8px 20px rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    width: 450px;
+    height: 250px;
     position: relative;
-    overflow: hidden; /* Hide overflow for image animations */
-    transition: transform 0.5s ease; /* Smooth transition for image */
+    overflow: hidden;
+    transition: transform 0.5s ease;
     margin-right: 10px;
 }
 
-/* Navbar styles */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -45,22 +38,19 @@ body {
     margin-top: 1px;
 }
 
-
-/* Logo styling */
 .logo {
-    height: 50px;  /* Adjust the height as needed */
-    width: auto;   /* Set width to auto to maintain aspect ratio */
+    height: 50px;
+    width: auto;
     border-radius: 10px;
-    background-size: contain; /* Scale the logo to fit the container */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    margin-right: auto; /* Push the logo to the left */
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: auto;
 }
 
-/* Navigation links container */
 .nav-links {
     list-style: none;
     display: flex;
-    margin-left: auto; /* Push nav links to the right */
+    margin-left: auto;
     margin-right: 30px;
     text-decoration: none;
 }
@@ -89,80 +79,74 @@ body {
 }
 
 .about-img img {
-    width: 100%; /* Make the image responsive */
-    height: 100%; /* Fill the container */
-    object-fit: cover; /* Maintain aspect ratio without stretching */
-    transition: transform 0.5s ease; /* Smooth transition for image */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
 }
 
-/* Animation on hover */
 .about-img:hover img {
-    transform: scale(1.05); /* Slight zoom in on hover */
+    transform: scale(1.05);
 }
 
-/* Text styling */
 .about-text {
-    padding-top: 2%; /* Reduced top padding for text */
-    opacity: 0; /* Start hidden */
-    transform: translateY(20px); /* Move down */
-    animation: fadeInUp 1s forwards; /* Animation for text */
-    animation-delay: 0.5s; /* Delay for text */
-    color: white; /* Text color */
+    padding-top: 2%;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+    animation-delay: 0.5s;
+    color: white;
 }
 
-/* Headings animation */
 .about-text h2 {
     font-family: 'Poppins', sans-serif;
-    color: #ffcc00; /* Bright color for headings */
-    font-size: 45px; /* Adjusted font size */
-    opacity: 0; /* Start hidden */
-    transform: translateY(30px); /* Move down */
-    animation: slideIn 0.8s forwards; /* Animation for h2 */
-    animation-delay: 0.7s; /* Delay for h2 */
+    color: #ffcc00;
+    font-size: 45px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideIn 0.8s forwards;
+    animation-delay: 0.7s;
 }
 
 .about-text p {
     font-family: 'Ubuntu', sans-serif;
     font-size: 18px;
-    color: white; /* Maintain white text color */
-    opacity: 0; /* Start hidden */
-    transform: translateY(30px); /* Move down */
-    animation: slideIn 0.8s forwards; /* Animation for paragraph */
-    animation-delay: 0.9s; /* Delay for paragraph */
+    color: white;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideIn 0.8s forwards;
+    animation-delay: 0.9s;
 }
 
-/* Keyframes for fadeInUp animation */
 @keyframes fadeInUp {
     from {
-        opacity: 0; /* Start invisible */
-        transform: translateY(20px); /* Move down */
+        opacity: 0;
+        transform: translateY(20px);
     }
     to {
-        opacity: 1; /* Fade in */
-        transform: translateY(0); /* Move to original position */
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-/* Keyframes for slideIn animation */
 @keyframes slideIn {
     from {
-        opacity: 0; /* Start invisible */
-        transform: translateY(30px); /* Move down */
+        opacity: 0;
+        transform: translateY(30px);
     }
     to {
-        opacity: 1; /* Fade in */
-        transform: translateY(0); /* Move to original position */
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 
-/* Bubble styling */
 .bubble {
     position: absolute;
-    bottom: -50px; /* Start below the viewport */
-    background-color: rgba(255, 255, 255, 0.5); /* Bubble color */
+    bottom: -50px;
+    background-color: rgba(255, 255, 255, 0.5);
     border-radius: 50%;
     opacity: 0.8;
-    animation: rise 8s infinite; /* Animation for rising */
+    animation: rise 8s infinite;
 }
 
 .bubble:nth-child(1) { width: 40px; height: 40px; left: 20%; animation-duration: 6s; }
@@ -176,7 +160,6 @@ body {
 .bubble:nth-child(9) { width: 30px; height: 30px; left: 15%; animation-duration: 7s; }
 .bubble:nth-child(10) { width: 55px; height: 55px; left: 35%; animation-duration: 5s; }
 
-/* Keyframes for bubble rising */
 @keyframes rise {
     0% {
         transform: translateY(0);
@@ -184,6 +167,6 @@ body {
     }
     100% {
         transform: translateY(-100vh);
-        opacity: 0; /* Fade out */
+        opacity: 0;
     }
 }

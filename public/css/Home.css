@@ -4,33 +4,29 @@
     box-sizing: border-box;
 }
 
-/* Body styling */
 body {
     background: #eaeaea;
     font-family: Arial, sans-serif;
     background-color: #d7d7f5;
-    
 }
 
-/* Navbar styles */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #4542c5;
-    padding:10px;
+    padding: 10px;
     font-weight: bolder;
 }
 
 .logo {
-    
-    
-    height: 50px;  /* Adjust the height as needed */
-    width: auto;   /* Set width to auto to maintain aspect ratio */
-   border-radius: 10px;
-    background-size: contain; /* Scale the logo to fit the container */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
+    height: 50px;
+    width: auto;
+    border-radius: 10px;
+    background-size: contain;
+    background-repeat: no-repeat;
 }
+
 .nav-links {
     list-style: none;
     display: flex;
@@ -57,7 +53,7 @@ body {
     border-radius: 10px;
     width: auto;
 }
-/* Add styles for the services section */
+
 .services-section {
     padding: 50px;
     background-color: #f5f5f5;
@@ -84,19 +80,16 @@ body {
     color: #666;
 }
 
-/* Footer styles */
 .footer {
     text-align: center;
     padding: 20px;
     background-color: #4542c5;
     color: white;
-    position: relative; /* Make sure footer is not fixed */
-    bottom: 0; /* Optional: stick to the bottom */
-    width: 100%; /* Full width */
+    position: relative;
+    bottom: 0;
+    width: 100%;
 }
 
-
-/* Main layout styles */
 .main {
     display: flex;
     justify-content: space-between;
@@ -106,7 +99,6 @@ body {
     max-width: 1400px;
 }
 
-/* Left text content styles */
 .text-content {
     flex: 1;
     padding-right: 20px;
@@ -124,19 +116,16 @@ body {
     color: #666;
 }
 
-/* Right carousel container styles */
 .container {
     flex: 1;
-    width: 1500px; /* Increased width */
+    width: 1500px;
     height: 450px;
     background: #f5f5f5;
     box-shadow: 0 30px 50px #dbdbdb;
     position: relative;
     margin-top: 1px;
-    
 }
 
-/* Slide and Item styles */
 .container .slide .item {
     width: 200px;
     height: 150px;
@@ -252,61 +241,60 @@ body {
 }
 
 .hamburger {
-    display: none; /* Hidden by default */
-    font-size: 30px; /* Adjust size as needed */
-    color: #fff; /* Color of the hamburger icon */
-    cursor: pointer; /* Pointer cursor */
+    display: none;
+    font-size: 30px;
+    color: #fff;
+    cursor: pointer;
 }
 
-/* Media query for mobile view */
 @media (max-width: 900px) {
     .navbar {
         flex-direction: column;
         align-items: flex-start;
-        padding: 10px; /* Less padding */
+        padding: 10px;
     }
 
     .nav-links {
-        display: none; /* Hide the nav links initially */
-        flex-direction: column; /* Stack links */
-        width: 100%; /* Full width */
-        position: absolute; /* Positioning for centering */
-        top: 60px; /* Adjust based on navbar height */
-        left: 50%; /* Center horizontally */
-        transform: translateX(-50%); /* Center the nav */
-        background-color: #4542c5; /* Background color */
-        padding: 20px 0; /* Padding for better spacing */
-        border-radius: 5px; /* Optional: rounded corners */
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #4542c5;
+        padding: 20px 0;
+        border-radius: 5px;
     }
 
     .nav-links.active {
-        display: flex; /* Show when activated */
+        display: flex;
     }
 
     .hamburger {
-        display: block; /* Show the hamburger icon */
-        margin-left: auto; /* Align to the right */
+        display: block;
+        margin-left: auto;
         align-items: center;
     }
 
     .text-content h1 {
-        font-size: 40px; /* Smaller font size */
+        font-size: 40px;
     }
 
     .text-content p {
-        font-size: 0.9rem; /* Smaller font size */
+        font-size: 0.9rem;
     }
 
     .container {
-        height: 300px; /* Smaller height */
-        width: 100%; /* Full width on small screens */
+        height: 300px;
+        width: 100%;
     }
 
     .main {
         display: grid;
         grid-template-columns: 1;
-        grid-template-rows: 1fr 1fr; /* Stack content vertically */
-        align-items: center; /* Center align */
-        padding: 20px; /* Less padding */
+        grid-template-rows: 1fr 1fr;
+        align-items: center;
+        padding: 20px;
     }
 }

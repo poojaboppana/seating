@@ -5,7 +5,7 @@ body {
 }
 
 header {
-    background-color: #4CAF50; /* Header color */
+    background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
     display: flex;
@@ -14,7 +14,7 @@ header {
 }
 
 .logo img {
-    height: 50px; /* Adjust logo size */
+    height: 50px;
 }
 
 nav ul {
@@ -34,16 +34,16 @@ nav ul li a {
 
 .content {
     display: flex;
-    height: calc(100vh - 60px); /* Adjust height based on header */
+    height: calc(100vh - 60px);
 }
 
 .left {
-    width: 40%; /* Left side width */
+    width: 40%;
     padding: 20px;
 }
 
 .right {
-    width: 60%; /* Right side width */
+    width: 60%;
     position: relative;
     overflow: hidden;
 }
@@ -60,6 +60,6 @@ nav ul li a {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(128, 128, 128, 0.5); /* Gray shade */
-    z-index: 1; /* Ensure shade is above the image */
+    background-color: rgba(128, 128, 128, 0.5);
+    z-index: 1;
 }

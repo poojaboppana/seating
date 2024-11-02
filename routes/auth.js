@@ -1,25 +1,22 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const User = require('../models/User'); // Ensure the path is correct
-const Admin = require('../models/admin'); // Ensure the path is correct
-const Event = require('../models/event'); // Adjust the path if needed
+const User = require('../models/User'); 
+const Admin = require('../models/admin'); 
+const Event = require('../models/event'); 
 const path = require('path');
 
 const router = express.Router();
 
-// Google OAuth login route
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-// Google OAuth callback route
 router.get('/auth/google/callback',
     passport.authenticate('google', { failureRedirect: '/login' }),
     (req, res) => {
-        res.redirect('/'); // Redirect to home after successful login
+        res.redirect('/');
     }
 );
 
-// Signup route
 router.post('/signup', async (req, res) => {
     const { username, email, password, role } = req.body;
 
@@ -39,7 +36,6 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// Login route
 router.post('/login', async (req, res) => {
     const { email, password, role } = req.body;
 
@@ -75,7 +71,6 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// Event availability route
 router.post('/check-event', async (req, res) => {
     const { eventName, eventDate, location } = req.body;
 
@@ -108,7 +103,7 @@ router.post('/check-event', async (req, res) => {
 
         res.json({ 
             available: true, 
-            redirectUrl: `/seats?eventName=${encodeURIComponent(event.eventName)}`, // Pass the eventName
+            redirectUrl: `/seats?eventName=${encodeURIComponent(event.eventName)}`, 
             eventDetails: { 
                 name: event.eventName,
                 date: event.eventDate,
@@ -122,20 +117,17 @@ router.post('/check-event', async (req, res) => {
     }
 });
 
-// Fetch event details by eventName for the seats page
 router.get('/seats', async (req, res) => {
-    const { eventName } = req.query; // Get the event name from the query string
-    console.log("Event Name:", eventName); // Log the event name for debugging
+    const { eventName } = req.query; 
+    console.log("Event Name:", eventName);
 
     try {
-        // Find the event by eventName
         const eventDetails = await Event.findOne({ eventName: eventName });
 
         if (!eventDetails) {
             return res.status(404).send('Event not found');
         }
 
-        // Render the seats.ejs file with event details
         res.render('seats', { event: eventDetails });
     } catch (error) {
         console.error('Error fetching event details:', error);
@@ -143,7 +135,6 @@ router.get('/seats', async (req, res) => {
     }
 });
 
-// Protect the admin route
 router.get('/admin', (req, res) => {
     if (req.session.userId) {
         res.sendFile(path.join(__dirname, '..', 'views', 'admin.html'));
@@ -152,7 +143,6 @@ router.get('/admin', (req, res) => {
     }
 });
 
-// Logout route
 router.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
@@ -162,7 +152,7 @@ router.get('/logout', (req, res) => {
         res.redirect('/');
     });
 });
-// Fetch event details for the eventdetails page
+
 router.get('/eventdetails', async (req, res) => {
     const { eventName } = req.query;
 
@@ -173,7 +163,7 @@ router.get('/eventdetails', async (req, res) => {
             return res.status(404).send('Event not found');
         }
 
-        res.render('eventdetails', { event: eventDetails }); // Render eventdetails.ejs with event details
+        res.render('eventdetails', { event: eventDetails });
     } catch (error) {
         console.error("Error fetching event details:", error);
         res.status(500).send('An error occurred while fetching event details.');

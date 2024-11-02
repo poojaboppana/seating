@@ -6,29 +6,23 @@ const seatCountInput = document.getElementById('seatCount');
 const bookButton = document.getElementById('bookButton');
 const notAvailableMessage = document.getElementById('notAvailableMessage');
 
-// Use the dynamically passed totalSeats value from the server-side
 let bookedSeats = 0;
 
-// Initialize seats
 async function initSeats() {
-    // Get booked seats from localStorage
     const bookedSeatsFromStorage = JSON.parse(localStorage.getItem('bookedSeats')) || [];
-    bookedSeats = bookedSeatsFromStorage.length; // Update bookedSeats count
+    bookedSeats = bookedSeatsFromStorage.length;
 
-    // Loop through the number of available seats
     for (let i = 0; i < totalSeats; i++) {
         const seat = document.createElement('div');
         seat.classList.add('seat');
-        seat.dataset.seatNumber = i + 1; // Assign a unique seat number
-        seat.innerHTML = `<span class="seat-number">${i + 1}</span><img src="/css/chair.jpeg" alt="Chair" style="width: 30px;">`; // Adjust chair image size
+        seat.dataset.seatNumber = i + 1;
+        seat.innerHTML = `<span class="seat-number">${i + 1}</span><img src="/css/chair.jpeg" alt="Chair" style="width: 30px;">`;
         seat.addEventListener('click', () => selectSeat(seat));
 
-        // Check if the seat is booked
         if (bookedSeatsFromStorage.includes(i + 1)) {
-            seat.classList.add('booked'); // Mark as booked
+            seat.classList.add('booked');
         }
 
-        // Add seats to left or right half based on index
         if (i < totalSeats / 2) {
             leftHalf.appendChild(seat);
         } else {
@@ -39,28 +33,24 @@ async function initSeats() {
     updateAvailableCount();
 }
 
-// Select a seat
 function selectSeat(seat) {
     if (seat.classList.contains('booked')) {
-        return; // Prevent selecting a booked seat
+        return;
     }
-    seat.classList.toggle('selected'); // Toggle selected state
-    updateAvailableCount(); // Update available count when seat selection changes
+    seat.classList.toggle('selected');
+    updateAvailableCount();
 }
 
-// Update available seat count
 function updateAvailableCount() {
     const availableSeats = totalSeats - bookedSeats;
     const selectedSeats = document.querySelectorAll('.seat.selected').length;
-    availableCount.textContent = availableSeats - selectedSeats; // Show available seats after selection
+    availableCount.textContent = availableSeats - selectedSeats;
 }
 
-// Show alert for validation errors
 function showAlert(message) {
-    alert(message); // Simple alert for demonstration
+    alert(message);
 }
 
-// Book selected seats
 bookButton.addEventListener('click', bookSeats);
 function bookSeats() {
     const requestedSeats = parseInt(seatCountInput.value);
@@ -71,54 +61,44 @@ function bookSeats() {
         return;
     }
 
-    // Check if requested seats exceed available seats
     if (requestedSeats > (totalSeats - bookedSeats)) {
-        // Display not available message
-        notAvailableMessage.textContent = "Not available"; // Show the not available message
-        notAvailableMessage.style.display = 'block'; // Make it visible
+        notAvailableMessage.textContent = "Not available";
+        notAvailableMessage.style.display = 'block';
         setTimeout(() => {
-            notAvailableMessage.style.display = 'none'; // Hide after 3 seconds
+            notAvailableMessage.style.display = 'none';
         }, 3000);
         return;
     }
 
-    // Check if selected seats match the requested number
     if (selectedSeats.length !== requestedSeats) {
-        showAlert(`Please select exactly ${requestedSeats} seats.`); // Corrected string interpolation
+        showAlert(`Please select exactly ${requestedSeats} seats.`);
         return;
     }
 
-    // Book selected seats
     selectedSeats.forEach(seat => {
         bookSeat(seat);
     });
 
-    // Clear selection after booking
     selectedSeats.forEach(seat => {
         seat.classList.remove('selected');
     });
 
-    // Corrected success message to include booked seats and available seats
-    const availableSeatsAfterBooking = totalSeats - bookedSeats; // Calculate available seats after booking
+    const availableSeatsAfterBooking = totalSeats - bookedSeats;
     successMessage.textContent = `Successfully booked ${requestedSeats} seat(s)! Available Seats: ${availableSeatsAfterBooking}`;
-    successMessage.style.display = 'block'; // Show success message
+    successMessage.style.display = 'block';
     setTimeout(() => {
-        successMessage.style.display = 'none'; // Hide after 3 seconds
+        successMessage.style.display = 'none';
     }, 3000);
 
-    // Update available seat count
     updateAvailableCount();
 }
 
-// Function to book a seat
 function bookSeat(seat) {
     const seatNumber = parseInt(seat.dataset.seatNumber);
-    bookedSeats += 1; // Increment booked seats count
-    seat.classList.add('booked'); // Mark seat as booked
-    // Store booked seat number in localStorage
+    bookedSeats += 1;
+    seat.classList.add('booked');
     const currentBookedSeats = JSON.parse(localStorage.getItem('bookedSeats')) || [];
     localStorage.setItem('bookedSeats', JSON.stringify([...currentBookedSeats, seatNumber]));
 }
 
-// Initialize seats when the page loads
 document.addEventListener('DOMContentLoaded', initSeats);

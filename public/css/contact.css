@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
 
-/* General body styling */
 body {
     background-color: #121212;
     color: #fff;
@@ -10,32 +9,28 @@ body {
     padding: 20px;
 }
 
-/* Navbar styles */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #4542c5;
-    padding:10px;
+    padding: 10px;
     font-weight: bolder;
 }
 
-
-/* Logo styling */
 .logo {
-    height: 50px;  /* Adjust the height as needed */
-    width: auto;   /* Set width to auto to maintain aspect ratio */
+    height: 50px;
+    width: auto;
     border-radius: 10px;
-    background-size: contain; /* Scale the logo to fit the container */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    margin-right: auto; /* Push the logo to the left */
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: auto;
 }
 
-/* Navigation links container */
 .nav-links {
     list-style: none;
     display: flex;
-    margin-left: auto; /* Push nav links to the right */
+    margin-left: auto;
 }
 
 .nav-links li {
@@ -59,7 +54,6 @@ body {
     border-radius: 10px;
 }
 
-/* Main contact container */
 .contact-container {
     max-width: 1000px;
     margin: auto;
@@ -68,12 +62,11 @@ body {
     display: flex;
     justify-content: space-between;
     color: #ffffff;
-    position: relative; /* Required for the pseudo-elements */
-    overflow: hidden; /* Ensure no overflow due to padding animations */
+    position: relative;
+    overflow: hidden;
     height: 500px;
 }
 
-/* Decorative before and after for contact container */
 .contact-container::before,
 .contact-container::after {
     content: "";
@@ -82,28 +75,25 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    border: 5px solid #00bcd4; /* Decorative border */
-    border-radius: 10px; /* Rounded corners */
-    pointer-events: none; /* Prevents interfering with mouse events */
-    z-index: -1; /* Keep it behind other content */
+    border: 5px solid #00bcd4;
+    border-radius: 10px;
+    pointer-events: none;
+    z-index: -1;
 }
 
-/* Floating Effect */
 .contact-info,
 .message-form {
     background: #1f1f1f;
-    border-radius: 10px; /* Rounded corners for floating effect */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Shadow for floating effect */
-    transition: transform 0.3s ease; /* Smooth transition */
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
 }
 
-/* Add a hover effect for floating elements */
 .contact-info:hover,
 .message-form:hover {
-    transform: translateY(-5px); /* Move the element up slightly on hover */
+    transform: translateY(-5px);
 }
 
-/* Shimmering Border Animation for Message Form */
 @keyframes shimmer {
     0% {
         border-color: #00bcd4;
@@ -119,16 +109,14 @@ body {
     }
 }
 
-/* Right Message Form Section */
 .message-form {
     position: relative;
     width: 40%;
     padding: 40px;
-    border: 4px solid #00bcd4; /* Solid border to animate */
-    animation: shimmer 3s infinite; /* Apply shimmering border animation */
+    border: 4px solid #00bcd4;
+    animation: shimmer 3s infinite;
 }
 
-/* Form input and textarea styling */
 .message-form input,
 .message-form textarea {
     width: 100%;
@@ -162,10 +150,9 @@ body {
     background-color: #0097a7;
 }
 
-/* Left Contact Information Section */
 .contact-info {
     width: 50%;
-    padding: 20px; /* Adjusted padding for content spacing */
+    padding: 20px;
 }
 
 h1 {
@@ -207,7 +194,6 @@ h1 {
     color: #b3b3b3;
 }
 
-/* Social media styling */
 .social-media {
     margin-top: 20px;
 }
